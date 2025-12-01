@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Select from 'react-select';
 import headerLogo from './assets/headerlogo_1.png';
+import bgImage from './assets/wintel-lottery-bg-3.png';
+
 
 // Bangladesh Districts Data
 const districts = [
@@ -130,33 +132,42 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen overflow-auto bg-[#f9f9f9] flex items-center justify-center p-0">
-      <div className="w-full max-w-lg">
+    <div className="relative min-h-screen w-full overflow-hidden">
+      {/* Fixed Background Image with Overlay */}
+      <div 
+        className="fixed inset-0 w-full h-full"
+        style={{
+          backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url(${bgImage})`,
+          backgroundSize: "cover",
+          // backgroundPosition: "center",
+          backgroundRepeat: "no-repeat"
+        }}
+      />
 
-        <div className="bg-white rounded-2xl shadow-2xl p-4 sm:p-6">
-
+      {/* Content Layer */}
+      <div className="relative z-10 min-h-screen flex items-center justify-center p-4 sm:p-6">
+        <div className="w-full max-w-lg bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-4 sm:p-6">
+          
           {/* Header */}
           <div className="text-center mb-4">
-            
-            {/* Transparent Logo */}
-            <div className="flex items-center justify-center mb-2">
-              <img
-                src={headerLogo}
-                alt="Wintel Lottery Logo"
-                className="w-20 h-auto sm:w-24 object-contain"
-              />
-            </div>
-
+            <img
+              src={headerLogo}
+              alt="Wintel Lottery Logo"
+              className="w-20 sm:w-24 h-auto mx-auto mb-2"
+            />
             <h1 className="text-xl sm:text-2xl font-bold text-gray-800">
               Bangladesh Thalassaemia Samity & Hospital
             </h1>
-            <p className="text-xs sm:text-sm text-gray-500">Get your lucky ticket now!</p>
+            <p className="text-xs sm:text-sm text-gray-500">
+              Get your lucky ticket now!
+            </p>
           </div>
-
+  
           {/* Form */}
           <div className="space-y-3">
-
+            
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {/* Mobile */}
               <div>
                 <label className="block text-xs font-semibold text-gray-700 mb-1">
                   Mobile <span className="text-red-500">*</span>
@@ -169,14 +180,17 @@ const App = () => {
                   placeholder="01XXXXXXXXX"
                   maxLength={11}
                   className={`w-full px-3 py-2 text-sm rounded-lg border-2 ${
-                    errors.mobileNo ? 'border-red-500' : 'border-gray-300 focus:border-blue-500'
+                    errors.mobileNo
+                      ? "border-red-500"
+                      : "border-gray-300 focus:border-blue-500"
                   }`}
                 />
                 {errors.mobileNo && (
                   <p className="mt-0.5 text-xs text-red-500">{errors.mobileNo}</p>
                 )}
               </div>
-
+  
+              {/* Name */}
               <div>
                 <label className="block text-xs font-semibold text-gray-700 mb-1">
                   Name
@@ -191,7 +205,8 @@ const App = () => {
                 />
               </div>
             </div>
-
+  
+            {/* District */}
             <div>
               <label className="block text-xs font-semibold text-gray-700 mb-1">
                 District
@@ -202,11 +217,10 @@ const App = () => {
                 onChange={handleDistrictChange}
                 placeholder="Select district"
                 styles={customSelectStyles}
-                isSearchable
               />
             </div>
-
-            {/* Quantity */}
+  
+            {/* Tickets + Total */}
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-semibold text-gray-700 mb-1">
@@ -217,22 +231,24 @@ const App = () => {
                     type="button"
                     onClick={() => handleQuantityChange(-1)}
                     disabled={formData.quantity === 1}
-                    className="w-8 h-8 flex items-center justify-center border rounded-md"
+                    className="w-8 h-8 flex items-center justify-center border rounded-md hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     −
                   </button>
-                  <div className="flex-1 text-center text-lg font-bold text-blue-600">{formData.quantity}</div>
+                  <div className="flex-1 text-center text-lg font-bold text-blue-600">
+                    {formData.quantity}
+                  </div>
                   <button
                     type="button"
                     onClick={() => handleQuantityChange(1)}
                     disabled={formData.quantity === 10}
-                    className="w-8 h-8 flex items-center justify-center border rounded-md"
+                    className="w-8 h-8 flex items-center justify-center border rounded-md hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     +
                   </button>
                 </div>
               </div>
-
+  
               <div>
                 <label className="block text-xs font-semibold text-gray-700 mb-1">
                   Total
@@ -244,22 +260,25 @@ const App = () => {
                 </div>
               </div>
             </div>
-
+  
+            {/* Submit */}
             <button
               onClick={handleSubmit}
-              className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-3 rounded-lg"
+              className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-3 rounded-lg hover:from-blue-700 hover:to-cyan-600 transition-all"
             >
               🎫 Pay Now
             </button>
-
-            <div className="flex items-center justify-center gap-1.5 text-xs text-gray-500 pt-1">
+  
+            {/* Info */}
+            <div className="flex items-center justify-center gap-1.5 text-xs text-gray-600 pt-1">
               <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
               <span>Secure Payment • Terms Apply</span>
             </div>
-
+  
           </div>
+  
         </div>
       </div>
     </div>
