@@ -139,7 +139,6 @@ const App = () => {
         style={{
           backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url(${bgImage})`,
           backgroundSize: "cover",
-          // backgroundPosition: "center",
           backgroundRepeat: "no-repeat"
         }}
       />
@@ -260,21 +259,88 @@ const App = () => {
                 </div>
               </div>
             </div>
-  
+
+            {/* Prize Details */}
+      
+          <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg p-3 border-2 border-amber-200 prize-list font-bangla">
+            <div className="text-center mb-2">
+              <h3 className="text-sm font-bold text-gray-800">পুরস্কারের তালিকা</h3>
+              <p className="text-xs text-gray-600">ড্র: ২৩ জানুয়ারি ২০২৬</p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-1.5 text-xs">
+              <div className="bg-white/80 rounded p-1.5">
+                <span className="font-semibold text-amber-700">১ম পুরস্কার:</span>
+                ১টি ফ্ল্যাট / নগদ ৬০ লক্ষ টাকা
+              </div>
+
+              <div className="bg-white/80 rounded p-1.5">
+                <span className="font-semibold text-amber-700">২য় পুরস্কার:</span>
+                ১টি গাড়ি / নগদ ৭ লক্ষ টাকা
+              </div>
+
+              <div className="bg-white/80 rounded p-1.5">
+                <span className="font-semibold text-amber-700">৩য় পুরস্কার:</span>
+                ১টি বাইক / নগদ ১ লক্ষ ৫০ হাজার টাকা
+              </div>
+
+              <div className="bg-white/80 rounded p-1.5">
+                <span className="font-semibold text-amber-700">৪র্থ পুরস্কার:</span>
+                নগদ ৫০ হাজার টাকা
+              </div>
+
+              <div className="bg-white/80 rounded p-1.5">
+                <span className="font-semibold text-amber-700">৫ম পুরস্কার:</span>
+                নগদ ৩০ হাজার টাকা
+              </div>
+
+              <div className="bg-white/80 rounded p-1.5">
+                <span className="font-semibold text-amber-700">৬ষ্ঠ পুরস্কার:</span>
+                ১০টি × ৫ হাজার টাকা
+              </div>
+
+              <div className="bg-white/80 rounded p-1.5">
+                <span className="font-semibold text-amber-700">৭ম পুরস্কার:</span>
+                ১০০টি × ২ হাজার টাকা
+              </div>
+
+              <div className="bg-white/80 rounded p-1.5">
+                <span className="font-semibold text-amber-700">৮ম পুরস্কার:</span>
+                ৮২০টি × ১ হাজার টাকা
+              </div>
+            </div>
+          </div>
+
             {/* Submit */}
             <button
               onClick={handleSubmit}
-              className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-3 rounded-lg hover:from-blue-700 hover:to-cyan-600 transition-all"
+              className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-3 rounded-lg hover:from-blue-700 hover:to-cyan-600 transition-all shadow-lg"
             >
               🎫 Pay Now
             </button>
   
-            {/* Info */}
-            <div className="flex items-center justify-center gap-1.5 text-xs text-gray-600 pt-1">
-              <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              <span>Secure Payment • Terms Apply</span>
+            {/* Payment Methods */}
+            <div className="bg-gray-50 rounded-lg p-2.5 border border-gray-200">
+              <div className="flex items-center justify-center gap-2 mb-1.5">
+                <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span className="text-xs font-semibold text-gray-700">Secure Payment via EPS</span>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <div className="flex items-center gap-1.5 px-2 py-1 bg-white rounded border border-gray-300">
+                  <span className="text-xs font-bold text-pink-600">bKash</span>
+                </div>
+                <div className="flex items-center gap-1.5 px-2 py-1 bg-white rounded border border-gray-300">
+                  <span className="text-xs font-bold text-orange-600">Nagad</span>
+                </div>
+                <div className="flex items-center gap-1.5 px-2 py-1 bg-white rounded border border-gray-300">
+                  <span className="text-xs font-bold text-purple-600">Rocket</span>
+                </div>
+                <div className="flex items-center gap-1.5 px-2 py-1 bg-white rounded border border-gray-300">
+                  <span className="text-xs font-bold text-blue-600">Wintel</span>
+                </div>
+              </div>
             </div>
   
           </div>
