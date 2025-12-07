@@ -6,7 +6,7 @@ import payImage from '../assets/pay.png';
 import { Copyright } from 'lucide-react';
 // API Configuration
 const API_CONFIG = {
-  baseUrl: 'https://prodapi.bdlotteryticket.com/',
+  baseUrl: 'https://prodapi.bdlotteryticket.com',
   processPaymentEndpoint: '/api/v1/eps/process-payment',
   verifyPaymentEndpoint: '/api/v1/eps/payment-verification',
   token: 'y74VdLnmZoMCi+0EAkdRHwcdNnI3B/8+T9yuV0XQa3ZVBR5LU9lAUXewHmkBmLQ8X8eLzacw2/rEiKi/4OQ/uw==',
