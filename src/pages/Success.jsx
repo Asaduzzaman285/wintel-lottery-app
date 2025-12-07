@@ -109,7 +109,7 @@ const Success = () => {
     // Status
     doc.setTextColor(34, 139, 34);
     doc.setFont(undefined, 'bold');
-    doc.text('✓ Payment Verified', 25, 64);
+    doc.text(' Payment Verified', 25, 64);
 
     // Tickets Section
     doc.setFontSize(9);
