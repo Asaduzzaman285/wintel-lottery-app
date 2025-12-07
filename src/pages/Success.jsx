@@ -7,7 +7,7 @@ import bgImage from '../assets/wintel-lottery-bg-3.png';
 const API_CONFIG = {
   baseUrl: 'https://prodapi.bdlotteryticket.com',
   verificationEndpoint: '/api/v1/eps/payment-verification',
-  token: 'yNGRx3PdjsTfOsaj2BasPWf8gYhLhmJn6lDCj5bc1d7+2Y0PN5+6OIku1mcwAnsY5idarCv5XSqBvGL7lYV+/g==',
+  token: 'y74VdLnmZoMCi+0EAkdRHwcdNnI3B/8+T9yuV0XQa3ZVBR5LU9lAUXewHmkBmLQ8X8eLzacw2/rEiKi/4OQ/uw==',
   merchantToken: 'U2FsdGVkX19enVsX0qbxzB8WOdKhJuGtqaYOe1oH4DQ='
 };
 
@@ -18,44 +18,148 @@ const Success = () => {
   const [isVerifying, setIsVerifying] = useState(true);
   const [verificationError, setVerificationError] = useState(null);
 
-  // Fix for malformed URL EPS ID like: EPSTransactionId%20=%20C2502540512032
   const extractEPSTransactionId = () => {
     const query = window.location.search;
     const match = query.match(/EPSTransactionId.*?(\w{10,})/);
-
     if (match && match[1]) return match[1].trim();
-
     const fallback = searchParams.get("EPSTransactionId");
     return fallback?.trim() || "Not Provided";
   };
 
-  // Download receipt feature (TXT file)
-  const downloadReceipt = () => {
+  // Generate PDF Receipt
+  const downloadPDFReceipt = async () => {
     if (!verificationData?.data?.tickets) return;
 
-    const ticketDetails = verificationData.data.tickets
-      .map(t => `Ticket: ${t.ticket_no}, Mobile: ${t.mobile || 'Not Provided'}`)
-      .join('\n');
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({
+      orientation: 'landscape',
+      unit: 'mm',
+      format: [100, 210]
+    });
 
-    const receipt = `
-🎫 Lottery Ticket Receipt
----------------------------
-Merchant Txn ID: ${searchParams.get('MerchantTransactionId')}
-EPS Txn ID: ${extractEPSTransactionId()}
-Status: Verified
----------------------------
-${ticketDetails}
----------------------------
-Thank you for your support!
-    `;
+    const pageWidth = 210;
+    const pageHeight = 100;
 
-    const blob = new Blob([receipt], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = "ticket-receipt.txt";
-    link.click();
-    URL.revokeObjectURL(url);
+    // Diagonal stripe pattern background
+    doc.setFillColor(207, 121, 84);
+    for (let i = -50; i < pageWidth + 50; i += 8) {
+      doc.setDrawColor(207, 121, 84);
+      doc.setLineWidth(4);
+      doc.line(i, 0, i + 50, pageHeight);
+      
+      doc.setDrawColor(255, 255, 255);
+      doc.setLineWidth(4);
+      doc.line(i + 4, 0, i + 54, pageHeight);
+    }
+
+    // Main white content area with rounded corners
+    doc.setFillColor(255, 255, 255);
+    doc.roundedRect(10, 10, pageWidth - 20, pageHeight - 20, 3, 3, 'F');
+
+    // Left border accent
+    doc.setFillColor(207, 121, 84);
+    doc.rect(10, 10, 8, pageHeight - 20, 'F');
+
+    // Header Section
+    doc.setFontSize(24);
+    doc.setTextColor(207, 121, 84);
+    doc.setFont(undefined, 'bold');
+    doc.text('Christmas', 25, 25);
+    
+    doc.setFontSize(10);
+    doc.setFont(undefined, 'normal');
+    doc.text('raffle ticket', 25, 31);
+
+    // Entry Number Box (Top Right)
+    doc.setFillColor(255, 248, 240);
+    doc.roundedRect(145, 12, 55, 18, 2, 2, 'F');
+    doc.setFontSize(7);
+    doc.setTextColor(100, 100, 100);
+    doc.text('ENTRY NO :', 148, 17);
+    doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0);
+    const merchantId = searchParams.get('MerchantTransactionId') || 'N/A';
+    doc.text(merchantId.substring(0, 12), 148, 23);
+
+    // Drawing Information
+    doc.setFontSize(8);
+    doc.setTextColor(100, 100, 100);
+    const currentDate = new Date().toLocaleString('en-US', { 
+      month: 'long', 
+      day: 'numeric',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    doc.text(`DRAWING ON ${currentDate.toUpperCase()}`, 25, 37);
+
+    // Divider line
+    doc.setDrawColor(207, 121, 84);
+    doc.setLineWidth(0.5);
+    doc.line(25, 40, pageWidth - 15, 40);
+
+    // Organization Name
+    doc.setFontSize(9);
+    doc.setTextColor(0, 0, 0);
+    doc.setFont(undefined, 'bold');
+    doc.text('Bangladesh Thalassaemia Samity & Hospital', 25, 47);
+
+    // Transaction Details
+    doc.setFontSize(8);
+    doc.setFont(undefined, 'normal');
+    doc.setTextColor(60, 60, 60);
+    
+    doc.text('Merchant Transaction ID:', 25, 55);
+    doc.setFont(undefined, 'bold');
+    doc.text(merchantId, 70, 55);
+    
+    doc.setFont(undefined, 'normal');
+    doc.text('EPS Transaction ID:', 25, 61);
+    doc.setFont(undefined, 'bold');
+    doc.text(extractEPSTransactionId(), 70, 61);
+
+    // Status
+    doc.setTextColor(34, 139, 34);
+    doc.setFont(undefined, 'bold');
+    doc.text('✓ Payment Verified', 25, 67);
+
+    // Tickets Section
+    doc.setFontSize(9);
+    doc.setTextColor(207, 121, 84);
+    doc.setFont(undefined, 'bold');
+    doc.text('YOUR TICKET INFORMATION', 25, 75);
+
+    let yPos = 80;
+    doc.setFontSize(8);
+    doc.setTextColor(0, 0, 0);
+    
+    verificationData.data.tickets.forEach((ticket, index) => {
+      doc.setFont(undefined, 'bold');
+      doc.text(`Ticket ${index + 1}:`, 25, yPos);
+      doc.setFont(undefined, 'normal');
+      doc.text(`${ticket.ticket_no}`, 45, yPos);
+      doc.text(`Mobile: ${ticket.mobile || 'Not Provided'}`, 80, yPos);
+      yPos += 5;
+    });
+
+    // Right side info box
+    doc.setFillColor(255, 248, 240);
+    doc.roundedRect(145, 35, 55, 50, 2, 2, 'F');
+    
+    doc.setFontSize(7);
+    doc.setTextColor(100, 100, 100);
+    doc.text('NAME:', 148, 40);
+    doc.text('ADDRESS:', 148, 50);
+    doc.text('CITY:', 148, 60);
+    doc.text('PHONE:', 148, 70);
+
+    // Footer
+    doc.setFontSize(7);
+    doc.setTextColor(150, 150, 150);
+    doc.text('Thank you for your support!', pageWidth / 2, pageHeight - 5, { align: 'center' });
+
+    // Save PDF
+    doc.save('lottery-ticket-receipt.pdf');
   };
 
   useEffect(() => {
@@ -101,6 +205,15 @@ Thank you for your support!
 
     verifyPayment();
   }, [searchParams]);
+
+  // Load jsPDF library
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+    script.async = true;
+    document.body.appendChild(script);
+    return () => document.body.removeChild(script);
+  }, []);
 
   if (isVerifying) {
     return (
@@ -167,7 +280,6 @@ Thank you for your support!
       <div className="relative z-10 min-h-screen flex items-center justify-center p-4 sm:p-6">
         <div className="w-full max-w-lg bg-white/95 rounded-2xl shadow-2xl p-6 sm:p-8">
 
-          {/* Header */}
           <div className="text-center mb-6">
             <img src={headerLogo} alt="Logo" className="w-20 sm:w-24 mx-auto mb-3" />
             <h1 className="text-xl sm:text-2xl font-bold text-gray-800">
@@ -175,7 +287,6 @@ Thank you for your support!
             </h1>
           </div>
 
-          {/* Success Icon */}
           <div className="flex justify-center mb-6">
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
               <svg className="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -191,24 +302,19 @@ Thank you for your support!
             </p>
           </div>
 
-          {/* Transaction Details */}
           <div className="bg-gray-50 rounded-lg p-4 mb-6 space-y-2">
             <h3 className="font-semibold text-gray-800 text-center mb-2">Transaction Details</h3>
-
             <p className="text-sm">
               <strong>Merchant Txn ID:</strong> {searchParams.get('MerchantTransactionId')}
             </p>
-
             <p className="text-sm">
               <strong>EPS Txn ID:</strong> {extractEPSTransactionId()}
             </p>
-
             <p className="text-sm text-green-600">
               ✓ Verified Successfully
             </p>
           </div>
 
-          {/* Tickets */}
           {verificationData?.data?.tickets && (
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
               <h3 className="font-semibold text-blue-800 mb-3 text-center">
@@ -225,7 +331,6 @@ Thank you for your support!
             </div>
           )}
 
-          {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={() => navigate('/')}
@@ -235,10 +340,10 @@ Thank you for your support!
             </button>
 
             <button
-              onClick={downloadReceipt}
-              className="flex-1 bg-white border-2 border-blue-600 text-blue-600 py-3 rounded-lg font-semibold hover:bg-blue-50"
+              onClick={downloadPDFReceipt}
+              className="flex-1 bg-white border-2 border-orange-500 text-orange-600 py-3 rounded-lg font-semibold hover:bg-orange-50"
             >
-              Download Receipt
+              📄 Download PDF Receipt
             </button>
           </div>
 
