@@ -3,7 +3,9 @@ import Select from 'react-select';
 import headerLogo from '../assets/headerlogo_1.png';
 import bgImage from '../assets/wintel-lottery-bg-3.png';
 import payImage from '../assets/pay.png';
-import { Copyright, Headset } from 'lucide-react';
+import termimage from '../assets/terms.jpg';
+import { Copyright, Headset, FileText, X } from 'lucide-react';
+
 // API Configuration
 const API_CONFIG = {
   baseUrl: 'https://demoapi.bdlotteryticket.com',
@@ -93,6 +95,7 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [debugMode, setDebugMode] = useState(false);
   const [debugInfo, setDebugInfo] = useState(null);
+  const [showTermsModal, setShowTermsModal] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -253,8 +256,39 @@ const Home = () => {
     })
   };
 
+  const TermsModal = () => {
+    if (!showTermsModal) return null;
+
+    return (
+      <div 
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-2 sm:p-4"
+        onClick={() => setShowTermsModal(false)}
+      >
+        <div 
+          className="relative max-w-4xl w-full max-h-[90vh] overflow-hidden rounded-lg"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button
+            onClick={() => setShowTermsModal(false)}
+            className="absolute top-2 right-2 z-10 bg-white/90 p-1.5 rounded-full shadow-md hover:bg-white transition-colors"
+          >
+            <X className="w-5 h-5 text-gray-700" />
+          </button>
+          <img
+            src={termimage}
+            alt="Terms and Conditions"
+            className="w-full h-auto rounded-lg shadow-lg"
+          />
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
+      {/* Terms Modal */}
+      <TermsModal />
+
       {/* Fixed Background */}
       <div 
         className="fixed inset-0 w-full h-full"
@@ -275,14 +309,29 @@ const Home = () => {
             <img
               src={headerLogo}
               alt="Bangladesh Thalassaemia Samity & Hospital"
-              className="w-56  h-auto mx-auto mb-2"
+              className="w-56 h-auto mx-auto mb-2 
+                         [@media(max-width:440px)]:w-40 
+                         [@media(max-width:360px)]:w-32"
             />
-            <h1 className="text-xl sm:text-2xl font-bold text-purple-800">
-              Bangladesh Thalassaemia Samity (BTS)            </h1>
-              <h1 className="text-xl font-bold sm:text-2xl  text-blue-800" style={{fontSize:"18px"}}>
-             <span className='text-red-600'>Lottery 2025</span> <span className='text-purple-800'> (Govt. Approved)</span>        </h1>
-            <p className=" sm:text-sm text-gray-500">
-              Get your Ticket now!
+            
+            <h1 className="text-xl font-bold text-purple-800
+                          [@media(max-width:440px)]:text-sm
+                          [@media(max-width:360px)]:text-xs">
+              Bangladesh Thalassaemia Samity (BTS)
+            </h1>
+            
+            <h1 className="text-xl font-bold text-blue-800
+                          [@media(max-width:440px)]:text-sm
+                          [@media(max-width:360px)]:text-xs
+                          whitespace-nowrap">
+              <span className="text-red-600">Lottery 2025</span>
+              <span className="text-purple-800"> (Govt. Approved)</span>
+            </h1>
+            
+            <p className="sm:text-sm text-gray-500
+                         [@media(max-width:440px)]:text-xs
+                         [@media(max-width:360px)]:text-[10px]">
+              Get your lucky ticket now!
             </p>
           </div>
   
@@ -431,22 +480,34 @@ const Home = () => {
                 </div>
               </div>
             </div>
-             {/* Support Line */}
-         {/* Support Line (Compact) */}
-<div className="mt-2 flex items-center justify-start gap-1 text-center leading-none">
-  <Headset className="w-3.5 h-3.5 text-blue-600" />
-  <span className="text-[11px] font-medium text-gray-800">
-   Support :
-  </span>
-  <a
-    href="tel:09606549134"
-    className="text-[11px] font-semibold text-blue-700 hover:underline"
-  >
-    09606549134
-  </a>
-</div>
 
+            {/* Terms & Conditions + Support Line */}
+            <div className="mt-2 flex items-center justify-between gap-2">
+              {/* Terms & Conditions Button (Left) */}
+              <button
+                onClick={() => setShowTermsModal(true)}
+                className="flex items-center gap-1 text-blue-600 hover:text-blue-800 transition-colors group"
+              >
+                <FileText className="w-3.5 h-3.5" />
+                <span className="text-[11px] font-medium group-hover:underline">
+                  Terms & Conditions
+                </span>
+              </button>
 
+              {/* Support (Right) */}
+              <div className="flex items-center gap-1 text-center leading-none">
+                <Headset className="w-3.5 h-3.5 text-blue-600" />
+                <span className="text-[11px] font-medium text-gray-800">
+                  Support :
+                </span>
+                <a
+                  href="tel:09606549134"
+                  className="text-[11px] font-semibold text-blue-700 hover:underline"
+                >
+                  09606549134
+                </a>
+              </div>
+            </div>
 
             {/* Submit Button */}
             <button
@@ -499,8 +560,8 @@ const Home = () => {
               </div>
             )}
   
-  {/* Payment Methods */}
-  <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+            {/* Payment Methods */}
+            <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
               <div className="flex items-center justify-center gap-2 mb-2">
                 <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -515,24 +576,21 @@ const Home = () => {
                 />
               </div>
             </div>
+
+            {/* Copyright */}
             <div className="mt-10 w-full bg-[#edf4ff] py-4 text-center text-sm text-gray-700">
-  Copyright
-  <Copyright className="mx-1.5 inline h-3.5 w-3.5 text-gray-600" />
-  {new Date().getFullYear()} All Rights Reserved By{' '}
-  <a
-    href="https://wintelbd.com/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="font-semibold text-blue-600 hover:text-blue-800 hover:underline transition-colors cursor-pointer"
-  >
-    Wintel Limited.
-  </a>
-</div>
-
-
-  
+              <Copyright className="mx-1.5 inline h-3.5 w-3.5 text-gray-600" />
+              The site is developed & operated by{' '}
+              <a
+                href="https://wintelbd.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-blue-600 hover:text-blue-800 hover:underline transition-colors cursor-pointer"
+              >
+                Wintel Limited.
+              </a>
+            </div>
           </div>
-  
         </div>
       </div>
     </div>
