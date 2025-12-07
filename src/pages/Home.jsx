@@ -3,7 +3,7 @@ import Select from 'react-select';
 import headerLogo from '../assets/headerlogo_1.png';
 import bgImage from '../assets/wintel-lottery-bg-3.png';
 import payImage from '../assets/pay.png';
-import { Copyright } from 'lucide-react';
+import { Copyright, Headset } from 'lucide-react';
 // API Configuration
 const API_CONFIG = {
   baseUrl: 'https://prodapi.bdlotteryticket.com',
@@ -107,7 +107,7 @@ const Home = () => {
 
   const handleQuantityChange = (delta) => {
     setFormData(prev => {
-      const newQuantity = Math.min(5, Math.max(1, prev.quantity + delta));
+      const newQuantity = Math.min(10, Math.max(1, prev.quantity + delta));
       return { ...prev, quantity: newQuantity };
     });
   };
@@ -275,13 +275,14 @@ const Home = () => {
             <img
               src={headerLogo}
               alt="Bangladesh Thalassaemia Samity & Hospital"
-              className="w-20 sm:w-24 h-auto mx-auto mb-2"
+              className="w-56  h-auto mx-auto mb-2"
             />
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-800">
-              Bangladesh Thalassaemia Samity & Hospital
-            </h1>
-            <p className="text-xs sm:text-sm text-gray-500">
-              Get your lucky ticket now!
+            <h1 className="text-xl sm:text-2xl font-bold text-purple-800">
+              Bangladesh Thalassaemia Samity (BTS)            </h1>
+              <h1 className="text-xl font-bold sm:text-2xl  text-blue-800" style={{fontSize:"18px"}}>
+             <span className='text-red-600'>Lottery 2025</span> <span className='text-purple-800'> (Govt. Approved)</span>        </h1>
+            <p className=" sm:text-sm text-gray-500">
+              Get your Ticket now!
             </p>
           </div>
   
@@ -430,6 +431,22 @@ const Home = () => {
                 </div>
               </div>
             </div>
+             {/* Support Line */}
+         {/* Support Line (Compact) */}
+<div className="mt-2 flex items-center justify-start gap-1 text-center leading-none">
+  <Headset className="w-3.5 h-3.5 text-blue-600" />
+  <span className="text-[11px] font-medium text-gray-800">
+   Support :
+  </span>
+  <a
+    href="tel:09606549134"
+    className="text-[11px] font-semibold text-blue-700 hover:underline"
+  >
+    09606549134
+  </a>
+</div>
+
+
 
             {/* Submit Button */}
             <button
