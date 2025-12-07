@@ -7,7 +7,7 @@ import bgImage from '../assets/wintel-lottery-bg-3.png';
 const API_CONFIG = {
   baseUrl: 'https://prodapi.bdlotteryticket.com',
   verificationEndpoint: '/api/v1/eps/payment-verification',
-  token: 'y74VdLnmZoMCi+0EAkdRHwcdNnI3B/8+T9yuV0XQa3ZVBR5LU9lAUXewHmkBmLQ8X8eLzacw2/rEiKi/4OQ/uw==',
+  token: 'yNGRx3PdjsTfOsaj2BasPWf8gYhLhmJn6lDCj5bc1d7+2Y0PN5+6OIku1mcwAnsY5idarCv5XSqBvGL7lYV+/g==',
   merchantToken: 'U2FsdGVkX19enVsX0qbxzB8WOdKhJuGtqaYOe1oH4DQ='
 };
 
@@ -121,7 +121,7 @@ const Success = () => {
     // Status
     doc.setTextColor(34, 139, 34);
     doc.setFont(undefined, 'bold');
-    doc.text('✓ Payment Verified', 25, 67);
+    doc.text(' Payment Verified', 25, 67);
 
     // Tickets Section
     doc.setFontSize(9);
