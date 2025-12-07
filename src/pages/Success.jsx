@@ -350,7 +350,6 @@ const Success = () => {
               className="flex-1 bg-white border-2 border-orange-500 text-orange-600 py-3 rounded-lg font-semibold hover:bg-orange-50"
             >
               📄 Download PDF Receipt
-              📄 Download PDF Receipt
             </button>
           </div>
 
