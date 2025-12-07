@@ -5,7 +5,7 @@ import bgImage from '../assets/wintel-lottery-bg-3.png';
 
 // API Configuration
 const API_CONFIG = {
-  baseUrl: 'https://api.bdlotteryticket.com',
+  baseUrl: 'https://demoapi.bdlotteryticket.com/',
   verificationEndpoint: '/api/v1/eps/payment-verification',
   token: 'y74VdLnmZoMCi+0EAkdRHwcdNnI3B/8+T9yuV0XQa3ZVBR5LU9lAUXewHmkBmLQ8X8eLzacw2/rEiKi/4OQ/uw==',
   merchantToken: 'U2FsdGVkX19enVsX0qbxzB8WOdKhJuGtqaYOe1oH4DQ='
