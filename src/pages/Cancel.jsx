@@ -42,8 +42,7 @@ const Cancel = () => {
               className="w-20 sm:w-24 mx-auto mb-3"
             />
             <h1 className="text-xl sm:text-2xl font-bold text-gray-800">
-              Bangladesh Thalassaemia Samity & Hospital
-            </h1>
+              Bangladesh Thalassaemia Samity (BTS)            </h1>
           </div>
 
           {/* Cancel Icon */}

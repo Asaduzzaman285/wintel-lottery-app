@@ -171,8 +171,7 @@ Thank you for your support!
           <div className="text-center mb-6">
             <img src={headerLogo} alt="Logo" className="w-20 sm:w-24 mx-auto mb-3" />
             <h1 className="text-xl sm:text-2xl font-bold text-gray-800">
-              Bangladesh Thalassaemia Samity & Hospital
-            </h1>
+              Bangladesh Thalassaemia Samity (BTS)            </h1>
           </div>
 
           {/* Success Icon */}

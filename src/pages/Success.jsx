@@ -27,8 +27,9 @@ const Success = () => {
   };
 
   // Generate PDF Receipt
-  const downloadPDFReceipt = async () => {
-    if (!verificationData?.data?.tickets) return;
+  const downloadPDFReceipt = async (dataOverride = null) => {
+    const ticketData = dataOverride || verificationData;
+    if (!ticketData?.data?.tickets) return;
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({
@@ -40,7 +41,7 @@ const Success = () => {
     const pageWidth = 210;
     const pageHeight = 100;
 
-    // Diagonal stripe pattern background
+    // Orange diagonal stripe pattern background
     doc.setFillColor(207, 121, 84);
     for (let i = -50; i < pageWidth + 50; i += 8) {
       doc.setDrawColor(207, 121, 84);
@@ -56,107 +57,94 @@ const Success = () => {
     doc.setFillColor(255, 255, 255);
     doc.roundedRect(10, 10, pageWidth - 20, pageHeight - 20, 3, 3, 'F');
 
-    // Left border accent
+    // Left orange border accent
     doc.setFillColor(207, 121, 84);
     doc.rect(10, 10, 8, pageHeight - 20, 'F');
 
     // Header Section
+    doc.setFontSize(9);
+    doc.setTextColor(0, 0, 0);
+    doc.setFont(undefined, 'bold');
+    doc.text('Bangladesh Thalassaemia Samity (BTS)', 25, 25);
+    
     doc.setFontSize(24);
     doc.setTextColor(207, 121, 84);
     doc.setFont(undefined, 'bold');
-    doc.text('Christmas', 25, 25);
-    
-    doc.setFontSize(10);
-    doc.setFont(undefined, 'normal');
-    doc.text('raffle ticket', 25, 31);
+    doc.text('Ticket', 25, 35);
 
-    // Entry Number Box (Top Right)
-    doc.setFillColor(255, 248, 240);
-    doc.roundedRect(145, 12, 55, 18, 2, 2, 'F');
-    doc.setFontSize(7);
-    doc.setTextColor(100, 100, 100);
-    doc.text('ENTRY NO :', 148, 17);
-    doc.setFontSize(10);
-    doc.setTextColor(0, 0, 0);
+    // Get merchant ID for later use
     const merchantId = searchParams.get('MerchantTransactionId') || 'N/A';
-    doc.text(merchantId.substring(0, 12), 148, 23);
 
     // Drawing Information
-    doc.setFontSize(8);
-    doc.setTextColor(100, 100, 100);
-    const currentDate = new Date().toLocaleString('en-US', { 
-      month: 'long', 
-      day: 'numeric',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-    doc.text(`DRAWING ON ${currentDate.toUpperCase()}`, 25, 37);
+    // doc.setFontSize(8);
+    // doc.setTextColor(100, 100, 100);
+    // const currentDate = new Date().toLocaleString('en-US', { 
+    //   month: 'long', 
+    //   day: 'numeric',
+    //   year: 'numeric',
+    //   hour: '2-digit',
+    //   minute: '2-digit'
+    // });
+    // doc.text(`DRAWING ON ${currentDate.toUpperCase()}`, 25, 42);
 
     // Divider line
     doc.setDrawColor(207, 121, 84);
     doc.setLineWidth(0.5);
-    doc.line(25, 40, pageWidth - 15, 40);
-
-    // Organization Name
-    doc.setFontSize(9);
-    doc.setTextColor(0, 0, 0);
-    doc.setFont(undefined, 'bold');
-    doc.text('Bangladesh Thalassaemia Samity & Hospital', 25, 47);
+    doc.line(25, 45, pageWidth - 15, 45);
 
     // Transaction Details
     doc.setFontSize(8);
     doc.setFont(undefined, 'normal');
     doc.setTextColor(60, 60, 60);
     
-    doc.text('Merchant Transaction ID:', 25, 55);
+    doc.text('Merchant Transaction ID:', 25, 52);
     doc.setFont(undefined, 'bold');
-    doc.text(merchantId, 70, 55);
+    doc.text(merchantId, 70, 52);
     
     doc.setFont(undefined, 'normal');
-    doc.text('EPS Transaction ID:', 25, 61);
+    doc.text('EPS Transaction ID:', 25, 58);
     doc.setFont(undefined, 'bold');
-    doc.text(extractEPSTransactionId(), 70, 61);
+    doc.text(extractEPSTransactionId(), 70, 58);
 
     // Status
     doc.setTextColor(34, 139, 34);
     doc.setFont(undefined, 'bold');
-    doc.text('✓ Payment Verified', 25, 67);
+    doc.text('✓ Payment Verified', 25, 64);
 
     // Tickets Section
     doc.setFontSize(9);
     doc.setTextColor(207, 121, 84);
     doc.setFont(undefined, 'bold');
-    doc.text('YOUR TICKET INFORMATION', 25, 75);
+    doc.text('YOUR TICKET INFORMATION', 25, 72);
 
-    let yPos = 80;
+    // Get all tickets
+    let yPos = 77;
     doc.setFontSize(8);
     doc.setTextColor(0, 0, 0);
     
-    verificationData.data.tickets.forEach((ticket, index) => {
+    ticketData.data.tickets.forEach((ticket, index) => {
       doc.setFont(undefined, 'bold');
       doc.text(`Ticket ${index + 1}:`, 25, yPos);
       doc.setFont(undefined, 'normal');
-      doc.text(`${ticket.ticket_no}`, 45, yPos);
+      doc.text(ticket.ticket_no, 45, yPos);
       doc.text(`Mobile: ${ticket.mobile || 'Not Provided'}`, 80, yPos);
       yPos += 5;
     });
 
-    // Right side info box
-    doc.setFillColor(255, 248, 240);
-    doc.roundedRect(145, 35, 55, 50, 2, 2, 'F');
-    
-    doc.setFontSize(7);
-    doc.setTextColor(100, 100, 100);
-    doc.text('NAME:', 148, 40);
-    doc.text('ADDRESS:', 148, 50);
-    doc.text('CITY:', 148, 60);
-    doc.text('PHONE:', 148, 70);
-
     // Footer
-    doc.setFontSize(7);
-    doc.setTextColor(150, 150, 150);
-    doc.text('Thank you for your support!', pageWidth / 2, pageHeight - 5, { align: 'center' });
+    doc.setFontSize(8);
+    doc.setTextColor(100, 100, 100);
+    doc.setFont(undefined, 'bold');
+    doc.text('Thank you for your support!', pageWidth / 2, pageHeight - 12, { align: 'center' });
+    
+    // doc.setFontSize(9);
+    // doc.setTextColor(0, 0, 0);
+    // doc.text('09606549134', pageWidth / 2, pageHeight - 7, { align: 'center' });
+    
+    // doc.setFontSize(7);
+    // doc.setTextColor(100, 100, 100);
+    // doc.setFont(undefined, 'normal');
+    // doc.text('support center', pageWidth / 2, pageHeight - 3, { align: 'center' });
 
     // Save PDF
     doc.save('lottery-ticket-receipt.pdf');
@@ -197,6 +185,13 @@ const Success = () => {
         setVerificationData(data);
         setIsVerifying(false);
 
+        // Auto-download PDF after 1.5 seconds for illiterate users
+        setTimeout(() => {
+          if (data?.data?.tickets) {
+            downloadPDFReceipt(data);
+          }
+        }, 1500);
+
       } catch (err) {
         setVerificationError(err.message);
         setIsVerifying(false);
@@ -212,7 +207,11 @@ const Success = () => {
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
     script.async = true;
     document.body.appendChild(script);
-    return () => document.body.removeChild(script);
+    return () => {
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
+    };
   }, []);
 
   if (isVerifying) {
@@ -283,8 +282,7 @@ const Success = () => {
           <div className="text-center mb-6">
             <img src={headerLogo} alt="Logo" className="w-20 sm:w-24 mx-auto mb-3" />
             <h1 className="text-xl sm:text-2xl font-bold text-gray-800">
-              Bangladesh Thalassaemia Samity & Hospital
-            </h1>
+              Bangladesh Thalassaemia Samity (BTS)            </h1>
           </div>
 
           <div className="flex justify-center mb-6">
