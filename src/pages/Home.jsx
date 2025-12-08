@@ -6,20 +6,12 @@ import payImage from '../assets/pay.png';
 // import termimage from '../assets/terms.jpg';
 import { Copyright, Headset, FileText, X,Clock } from 'lucide-react';
 
-// API Configuration
-// const API_CONFIG = {
-//   baseUrl: 'https://demiapi.bdlotteryticket.com',
-//   processPaymentEndpoint: '/api/v1/eps/process-payment',
-//   verifyPaymentEndpoint: '/api/v1/eps/payment-verification',
-//   token: 'yNGRx3PdjsTfOsaj2BasPWf8gYhLhmJn6lDCj5bc1d7+2Y0PN5+6OIku1mcwAnsY5idarCv5XSqBvGL7lYV+/g==',
-//   merchantToken: '966a5fd435cfa5881bd181c4c5567c7c'
-// };
 const API_CONFIG = {
-  baseUrl: 'https://demiapi.bdlotteryticket.com',
+  baseUrl: 'https://demoapi.bdlotteryticket.com', // ✅ Fixed typo
   processPaymentEndpoint: '/api/v1/eps/process-payment',
   verifyPaymentEndpoint: '/api/v1/eps/payment-verification',
-  token: 'y74VdLnmZoMCi+0EAkdRHwcdNnI3B/8+T9yuV0XQa3ZVBR5LU9lAUXewHmkBmLQ8X8eLzacw2/rEiKi/4OQ/uw==',
-  merchantToken: '966a5fd435cfa5881bd181c4c5567c7c'
+  token: 'y74VdLnmZoMCi+0EAkdRHwcdNnI3B/8+T9yuV0XQa3ZVBR5LU9lAUXewHmkBmLQ8X8eLzacw2/rEiKi/4OQ/uw==', // Demo token
+  merchantToken: '966a5fd435cfa5881bd181c4c5567c7c' // Keep consistent
 };
 
 
