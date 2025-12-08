@@ -60,27 +60,27 @@ const Success = () => {
     doc.setFillColor(207, 121, 84);
     doc.rect(10, 10, 8, pageHeight - 20, 'F');
   
-    // ✅ Header Logo
+    // ✅ Header Logo - LEFT ALIGNED
     try {
-      const imgWidth = 25;
-      const imgHeight = 15;
-      doc.addImage(headerLogo, 'PNG', 15, 12, imgWidth, imgHeight); // adjust X,Y,Width,Height
+      const imgWidth = 35; // Logo width
+      const imgHeight = 18; // Reduced height
+      doc.addImage(headerLogo, 'PNG', 20, 15, imgWidth, imgHeight);
     } catch (err) {
       console.warn("Header logo not loaded:", err);
     }
   
-    // Header Text
-    doc.setFontSize(10);
+    // Header Text - LEFT ALIGNED next to logo
+    doc.setFontSize(11);
     doc.setFont(undefined, 'bold');
     doc.setTextColor(128, 0, 128); // purple
-    doc.text('Bangladesh Thalassaemia Samity (BTS)', 45, 18);
+    doc.text('Bangladesh Thalassaemia Samity (BTS)', 58, 22);
   
-    doc.setFontSize(10);
+    doc.setFontSize(11);
     doc.setFont(undefined, 'bold');
     doc.setTextColor(2, 107, 57); // green
-    doc.text('Lottery 2025 (Govt. Approved)', 45, 26);
+    doc.text('Lottery 2025 (Govt. Approved)', 58, 28);
   
-    // Current Time Block
+    // Current Time Block - LEFT ALIGNED with proper margin
     const now = new Date();
     const formattedTime = now.toLocaleString('en-US', {
       year: 'numeric',
@@ -93,60 +93,56 @@ const Success = () => {
     doc.setFontSize(7);
     doc.setTextColor(100, 100, 100);
     doc.setFont(undefined, 'normal');
-    doc.text(`Generated: ${formattedTime}`, 15, 34);
+    doc.text(`Generated: ${formattedTime}`, 20, 38);
   
-    // Divider
+    // Divider - with proper margins
     doc.setDrawColor(207, 121, 84);
     doc.setLineWidth(0.5);
-    doc.line(15, 36, pageWidth - 15, 36);
+    doc.line(20, 41, pageWidth - 15, 41);
   
-    // Merchant / EPS Data
+    // Merchant / EPS Data - LEFT ALIGNED with proper margin
     const merchantId = searchParams.get('MerchantTransactionId') || 'N/A';
   
     doc.setFontSize(8);
     doc.setTextColor(60, 60, 60);
     doc.setFont(undefined, 'normal');
-    doc.text('Merchant Transaction ID:', 15, 42);
+    doc.text('Merchant Transaction ID:', 20, 46);
     doc.setFont(undefined, 'bold');
-    doc.text(merchantId, 60, 42);
+    doc.text(merchantId, 70, 46);
   
     doc.setFont(undefined, 'normal');
-    doc.text('EPS Transaction ID:', 15, 48);
+    doc.text('EPS Transaction ID:', 20, 51);
     doc.setFont(undefined, 'bold');
-    doc.text(extractEPSTransactionId(), 60, 48);
+    doc.text(extractEPSTransactionId(), 70, 51);
   
     // Payment Status
     doc.setTextColor(34, 139, 34);
     doc.setFont(undefined, 'bold');
-    doc.text(' Payment Verified', 15, 54);
+    doc.text('Payment Verified', 20, 56);
   
     // Ticket Section Header
     doc.setFontSize(9);
     doc.setTextColor(207, 121, 84);
     doc.setFont(undefined, 'bold');
-    doc.text('YOUR TICKET INFORMATION', 15, 60);
+    doc.text('YOUR TICKET INFORMATION', 20, 61);
   
-    // Ticket List
+    // Ticket List - with proper margins
     let yPos = 65;
     doc.setFontSize(8);
     doc.setTextColor(0, 0, 0);
   
     ticketData.data.tickets.forEach((ticket, index) => {
+      // Check if we're too close to the bottom
+      if (yPos > pageHeight - 15) return;
+      
       doc.setFont(undefined, 'bold');
-      doc.text(`Ticket ${index + 1}:`, 15, yPos);
+      doc.text(`Ticket ${index + 1}:`, 20, yPos);
       doc.setFont(undefined, 'normal');
-      doc.text(ticket.ticket_no, 35, yPos);
-      doc.text(`Mobile: ${ticket.mobile || 'Not Provided'}`, 75, yPos);
+      doc.text(ticket.ticket_no, 40, yPos);
+      doc.text(`Mobile: ${ticket.mobile || 'Not Provided'}`, 90, yPos);
       yPos += 5;
     });
   
-    // Footer
-    doc.setFontSize(8);
-    doc.setTextColor(100, 100, 100);
-    doc.setFont(undefined, 'bold');
-    doc.text('Thank you for your support!', pageWidth / 2, pageHeight - 12, {
-      align: 'center',
-    });
   
     // Save File
     doc.save('lottery-ticket-receipt.pdf');
