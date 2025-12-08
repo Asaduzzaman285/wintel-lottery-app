@@ -8,7 +8,7 @@ import { Copyright, Headset, FileText, X,Clock } from 'lucide-react';
 
 // API Configuration
 const API_CONFIG = {
-  baseUrl: 'https://prodapi.bdlotteryticket.com',
+  baseUrl: 'https://api.bdlotteryticket.com',
   processPaymentEndpoint: '/api/v1/eps/process-payment',
   verifyPaymentEndpoint: '/api/v1/eps/payment-verification',
   token: 'yNGRx3PdjsTfOsaj2BasPWf8gYhLhmJn6lDCj5bc1d7+2Y0PN5+6OIku1mcwAnsY5idarCv5XSqBvGL7lYV+/g==',
