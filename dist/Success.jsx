@@ -7,7 +7,7 @@ import { Headset,Copyright,Clock } from 'lucide-react';
 const API_CONFIG = {
   baseUrl: 'https://prodapi.bdlotteryticket.com',
   verificationEndpoint: '/api/v1/eps/payment-verification',
-  token: 'y74VdLnmZoMCi+0EAkdRHwcdNnI3B/8+T9yuV0XQa3ZVBR5LU9lAUXewHmkBmLQ8X8eLzacw2/rEiKi/4OQ/uw==', // ✅ Changed to demo token
+  token: 'yNGRx3PdjsTfOsaj2BasPWf8gYhLhmJn6lDCj5bc1d7+2Y0PN5+6OIku1mcwAnsY5idarCv5XSqBvGL7lYV+/g==', // ✅ Changed to demo token
   merchantToken: '966a5fd435cfa5881bd181c4c5567c7c'
 };
 
