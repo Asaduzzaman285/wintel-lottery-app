@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import headerLogo from '../assets/headerlogo_1.png';
 import bgImage from '../assets/wintel-lottery-bg-3.png';
-
+import { Copyright, Headset, Clock } from 'lucide-react';
 const Fail = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -36,7 +36,7 @@ const Fail = () => {
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
-      <div 
+      <div
         className="fixed inset-0 w-full h-full"
         style={{
           backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url(${bgImage})`,
@@ -48,16 +48,34 @@ const Fail = () => {
 
       <div className="relative z-10 min-h-screen flex items-center justify-center p-4 sm:p-6">
         <div className="w-full max-w-lg bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-6 sm:p-8">
-          
-          {/* Header */}
-          <div className="text-center mb-6">
+
+        <div className="text-center mb-4">
             <img
               src={headerLogo}
               alt="Bangladesh Thalassaemia Samity & Hospital"
-              className="w-20 sm:w-24 mx-auto mb-3"
+              className="w-56 h-auto mx-auto mb-2 
+                         [@media(max-width:440px)]:w-40 
+                         [@media(max-width:360px)]:w-32"
             />
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-800">
-              Bangladesh Thalassaemia Samity (BTS)            </h1>
+            
+            <h1 className="text-xl font-bold text-purple-800
+                          [@media(max-width:440px)]:text-sm
+                          [@media(max-width:360px)]:text-xs">
+              Bangladesh Thalassaemia Samity (BTS)
+            </h1>
+            
+            <h1 className="text-xl font-bold text-[#026B39]
+                          [@media(max-width:440px)]:text-sm
+                          [@media(max-width:360px)]:text-xs
+                          whitespace-nowrap">
+                     Lottery 2025 (Govt. Approved)
+            </h1>
+            
+            {/* <p className="sm:text-sm text-gray-500
+                         [@media(max-width:440px)]:text-xs
+                         [@media(max-width:360px)]:text-[10px]">
+              Get your ticket now!
+            </p> */}
           </div>
 
           {/* Error Icon */}
@@ -101,12 +119,51 @@ const Fail = () => {
             </div>
           )}
 
+
+          {/* Back Button */}
           <button
             onClick={() => navigate('/')}
-            className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold py-3 rounded-lg hover:from-blue-700 hover:to-cyan-600 transition-all shadow-lg"
+            className="mt-4 w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold py-3 rounded-lg hover:from-blue-700 hover:to-cyan-600 transition-all shadow-lg"
           >
             Go Back to Home
           </button>
+                       {/* Support */}
+          <div className="mt-3 flex flex-col items-end leading-none space-y-1">
+
+{/* Support Number */}
+<div className="flex items-center gap-1">
+  <Headset className="w-3.5 h-3.5 text-blue-600" />
+  <span className="text-[11px] font-medium text-gray-800">Support :</span>
+  <a
+    href="tel:09606549134"
+    className="text-[11px] font-semibold text-blue-700 hover:underline"
+  >
+    09606549134
+  </a>
+</div>
+
+{/* Support Hours */}
+<div className="flex items-center gap-1">
+  <Clock className="w-2.5 h-2.5 text-blue-600" />
+  <span className="text-[9px] text-gray-800">
+    Sunday to Thursday (10 AM to 6 PM)
+  </span>
+</div>
+</div>
+          {/* Footer */}
+          <div className="mt-4 w-full bg-[#edf4ff] py-3 text-center rounded-lg text-sm text-gray-700">
+            <Copyright className="mx-1.5 inline h-3.5 w-3.5 text-gray-600" />
+            The site is developed & operated by{" "}
+            <a
+              href="https://wintelbd.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+            >
+              Wintel Limited.
+            </a>
+          </div>
+
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import headerLogo from '../assets/headerlogo_1.png';
 import bgImage from '../assets/wintel-lottery-bg-3.png';
-
+import { Headset,Copyright,Clock } from 'lucide-react';
 // API Configuration
 const API_CONFIG = {
   baseUrl: 'https://demoapi.bdlotteryticket.com',
@@ -47,7 +47,7 @@ const Success = () => {
       doc.setDrawColor(207, 121, 84);
       doc.setLineWidth(4);
       doc.line(i, 0, i + 50, pageHeight);
-      
+
       doc.setDrawColor(255, 255, 255);
       doc.setLineWidth(4);
       doc.line(i + 4, 0, i + 54, pageHeight);
@@ -66,7 +66,7 @@ const Success = () => {
     doc.setTextColor(0, 0, 0);
     doc.setFont(undefined, 'bold');
     doc.text('Bangladesh Thalassaemia Samity (BTS)', 25, 25);
-    
+
     doc.setFontSize(24);
     doc.setTextColor(207, 121, 84);
     doc.setFont(undefined, 'bold');
@@ -96,11 +96,11 @@ const Success = () => {
     doc.setFontSize(8);
     doc.setFont(undefined, 'normal');
     doc.setTextColor(60, 60, 60);
-    
+
     doc.text('Merchant Transaction ID:', 25, 52);
     doc.setFont(undefined, 'bold');
     doc.text(merchantId, 70, 52);
-    
+
     doc.setFont(undefined, 'normal');
     doc.text('EPS Transaction ID:', 25, 58);
     doc.setFont(undefined, 'bold');
@@ -121,7 +121,7 @@ const Success = () => {
     let yPos = 77;
     doc.setFontSize(8);
     doc.setTextColor(0, 0, 0);
-    
+
     ticketData.data.tickets.forEach((ticket, index) => {
       doc.setFont(undefined, 'bold');
       doc.text(`Ticket ${index + 1}:`, 25, yPos);
@@ -136,11 +136,11 @@ const Success = () => {
     doc.setTextColor(100, 100, 100);
     doc.setFont(undefined, 'bold');
     doc.text('Thank you for your support!', pageWidth / 2, pageHeight - 12, { align: 'center' });
-    
+
     // doc.setFontSize(9);
     // doc.setTextColor(0, 0, 0);
     // doc.text('09606549134', pageWidth / 2, pageHeight - 7, { align: 'center' });
-    
+
     // doc.setFontSize(7);
     // doc.setTextColor(100, 100, 100);
     // doc.setFont(undefined, 'normal');
@@ -149,24 +149,23 @@ const Success = () => {
     // Save PDF
     doc.save('lottery-ticket-receipt.pdf');
   };
-
   useEffect(() => {
     const verifyPayment = async () => {
       try {
         const status = searchParams.get("Status");
         const merchantTxnId = searchParams.get("MerchantTransactionId");
         const epsTxnId = extractEPSTransactionId();
-
+  
         if (status !== "Success" || !merchantTxnId) {
           throw new Error("Invalid payment parameters");
         }
-
+  
         const formData = new FormData();
         formData.append('token', API_CONFIG.token);
         formData.append('merchant_token', API_CONFIG.merchantToken);
         formData.append('merchant_transaction_id', merchantTxnId);
         formData.append('eps_transaction_id', epsTxnId);
-
+  
         const response = await fetch(
           `${API_CONFIG.baseUrl}${API_CONFIG.verificationEndpoint}`,
           {
@@ -175,31 +174,42 @@ const Success = () => {
             body: formData
           }
         );
-
-        if (!response.ok) {
-          const errorMsg = await response.text();
-          throw new Error(errorMsg || "Payment verification failed");
+  
+        // ✅ Read JSON only once
+        const result = await response.json().catch(() => null);
+  
+        // ✅ Refresh case → 422 OR message
+        if (response.status === 422 || result?.message?.[0] === "Verification already done!") {
+          navigate('/');
+          return; // stop execution
         }
-
-        const data = await response.json();
-        setVerificationData(data);
+  
+        // ❌ Other errors
+        if (!response.ok) {
+          const errorMsg = result?.message?.[0] || "Payment verification failed";
+          throw new Error(errorMsg);
+        }
+  
+        // ✅ Success
+        setVerificationData(result);
         setIsVerifying(false);
-
-        // Auto-download PDF after 1.5 seconds for illiterate users
+  
+        // Auto PDF download
         setTimeout(() => {
-          if (data?.data?.tickets) {
-            downloadPDFReceipt(data);
+          if (result?.data?.tickets) {
+            downloadPDFReceipt(result);
           }
-        }, 1500);
-
+        }, 500);
+  
       } catch (err) {
         setVerificationError(err.message);
         setIsVerifying(false);
       }
     };
-
+  
     verifyPayment();
   }, [searchParams]);
+  
 
   // Load jsPDF library
   useEffect(() => {
@@ -217,7 +227,7 @@ const Success = () => {
   if (isVerifying) {
     return (
       <div className="relative min-h-screen w-full overflow-hidden">
-        <div 
+        <div
           className="fixed inset-0 w-full h-full"
           style={{
             backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url(${bgImage})`,
@@ -240,7 +250,7 @@ const Success = () => {
   if (verificationError) {
     return (
       <div className="relative min-h-screen w-full overflow-hidden">
-        <div 
+        <div
           className="fixed inset-0 w-full h-full"
           style={{
             backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url(${bgImage})`,
@@ -267,7 +277,7 @@ const Success = () => {
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
-      <div 
+      <div
         className="fixed inset-0 w-full h-full"
         style={{
           backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url(${bgImage})`,
@@ -278,11 +288,33 @@ const Success = () => {
       />
       <div className="relative z-10 min-h-screen flex items-center justify-center p-4 sm:p-6">
         <div className="w-full max-w-lg bg-white/95 rounded-2xl shadow-2xl p-6 sm:p-8">
-
-          <div className="text-center mb-6">
-            <img src={headerLogo} alt="Logo" className="w-20 sm:w-24 mx-auto mb-3" />
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-800">
-              Bangladesh Thalassaemia Samity (BTS)            </h1>
+        <div className="text-center mb-4">
+            <img
+              src={headerLogo}
+              alt="Bangladesh Thalassaemia Samity & Hospital"
+              className="w-56 h-auto mx-auto mb-2 
+                         [@media(max-width:440px)]:w-40 
+                         [@media(max-width:360px)]:w-32"
+            />
+            
+            <h1 className="text-xl font-bold text-purple-800
+                          [@media(max-width:440px)]:text-sm
+                          [@media(max-width:360px)]:text-xs">
+              Bangladesh Thalassaemia Samity (BTS)
+            </h1>
+            
+            <h1 className="text-xl font-bold text-[#026B39]
+                          [@media(max-width:440px)]:text-sm
+                          [@media(max-width:360px)]:text-xs
+                          whitespace-nowrap">
+                     Lottery 2025 (Govt. Approved)
+            </h1>
+            
+            {/* <p className="sm:text-sm text-gray-500
+                         [@media(max-width:440px)]:text-xs
+                         [@media(max-width:360px)]:text-[10px]">
+              Get your ticket now!
+            </p> */}
           </div>
 
           <div className="flex justify-center mb-6">
@@ -294,10 +326,14 @@ const Success = () => {
           </div>
 
           <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold text-green-600">Payment Successful! 🎉</h2>
+            <h2 className="text-2xl font-bold text-green-600">Payment Successful!</h2>
             <p className="text-gray-600 mt-2 text-sm">
               Your lottery ticket purchase is confirmed.
             </p>
+            <p className="text-gray-600 mt-2 text-sm">
+            You will get your ticket numbers via SMS.
+            </p>
+            
           </div>
 
           <div className="bg-gray-50 rounded-lg p-4 mb-6 space-y-2">
@@ -305,11 +341,11 @@ const Success = () => {
             <p className="text-sm">
               <strong>Merchant Txn ID:</strong> {searchParams.get('MerchantTransactionId')}
             </p>
-            <p className="text-sm">
+            {/* <p className="text-sm">
               <strong>EPS Txn ID:</strong> {extractEPSTransactionId()}
-            </p>
+            </p> */}
             <p className="text-sm text-green-600">
-              ✓ Verified Successfully
+              ✓ Payment Verified Successfully
             </p>
           </div>
 
@@ -344,10 +380,39 @@ const Success = () => {
               📄 Download PDF Receipt
             </button>
           </div>
+          <div className=" mt-3 flex items-end gap-1 justify-end text-center leading-none">
 
-          <p className="text-center text-xs text-gray-500 mt-6">
-            Support: support@bdlotteryticket.com
-          </p>
+            <Headset className="w-3.5 h-3.5 text-blue-600" />
+            <span className="text-[11px] font-medium text-gray-800">
+              Support :
+            </span>
+            <a
+              href="tel:09606549134"
+              className="text-[11px] font-semibold text-blue-700 hover:underline"
+            >
+              09606549134
+            </a>
+          </div>
+          <div className="mt-0 flex items-center justify-end gap-1 " style={{marginBottom:'-5px'}}>
+            <Clock className="w-2.5 h-2.5 text-blue-600" />
+                <span className="text-[9px] font-small text-gray-800">
+                  Sunday to Thursday (10 AM to 6 PM) 
+                </span>
+              </div>
+
+          {/* Copyright */}
+          <div className="mt-3 w-full bg-[#edf4ff] py-2 text-center rounded-lg text-sm text-gray-700">
+            <Copyright className="mx-1.5 inline h-3.5 w-3.5 text-gray-600" />
+            The site is developed & operated by{' '}
+            <a
+              href="https://wintelbd.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-blue-600 hover:text-blue-800 hover:underline transition-colors cursor-pointer"
+            >
+              Wintel Limited.
+            </a>
+          </div>
 
         </div>
       </div>
