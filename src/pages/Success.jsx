@@ -34,7 +34,7 @@ const Success = () => {
     const doc = new jsPDF({
       orientation: 'landscape',
       unit: 'mm',
-      format: [100, 210]
+      format: [100, 210],
     });
   
     const pageWidth = 210;
@@ -60,26 +60,25 @@ const Success = () => {
     doc.setFillColor(207, 121, 84);
     doc.rect(10, 10, 8, pageHeight - 20, 'F');
   
-    // Header text
-    doc.setFontSize(9);
-    doc.setTextColor(0, 0, 0);
-    doc.setFont(undefined, 'bold');
-    doc.text('Bangladesh Thalassaemia Samity (BTS)', 25, 25);
-  
-    // ✅ Logo (top-left inside white box)
+    // ✅ Header Logo
     try {
-      const imgWidth = 18;
-      const imgHeight = 18;
-      doc.addImage(logo, 'PNG', 15, 12, imgWidth, imgHeight);
+      const imgWidth = 25;
+      const imgHeight = 15;
+      doc.addImage(headerLogo, 'PNG', 15, 12, imgWidth, imgHeight); // adjust X,Y,Width,Height
     } catch (err) {
-      console.warn("Logo not loaded:", err);
+      console.warn("Header logo not loaded:", err);
     }
   
-    // Title
-    doc.setFontSize(24);
-    doc.setTextColor(207, 121, 84);
+    // Header Text
+    doc.setFontSize(10);
     doc.setFont(undefined, 'bold');
-    doc.text('Ticket', 25, 35);
+    doc.setTextColor(128, 0, 128); // purple
+    doc.text('Bangladesh Thalassaemia Samity (BTS)', 45, 18);
+  
+    doc.setFontSize(10);
+    doc.setFont(undefined, 'bold');
+    doc.setTextColor(2, 107, 57); // green
+    doc.text('Lottery 2025 (Govt. Approved)', 45, 26);
   
     // Current Time Block
     const now = new Date();
@@ -88,57 +87,56 @@ const Success = () => {
       month: 'short',
       day: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     });
   
-    doc.setFontSize(8);
+    doc.setFontSize(7);
     doc.setTextColor(100, 100, 100);
     doc.setFont(undefined, 'normal');
-    doc.text(`Generated: ${formattedTime}`, 25, 42);
+    doc.text(`Generated: ${formattedTime}`, 15, 34);
   
     // Divider
     doc.setDrawColor(207, 121, 84);
     doc.setLineWidth(0.5);
-    doc.line(25, 45, pageWidth - 15, 45);
+    doc.line(15, 36, pageWidth - 15, 36);
   
     // Merchant / EPS Data
     const merchantId = searchParams.get('MerchantTransactionId') || 'N/A';
   
     doc.setFontSize(8);
     doc.setTextColor(60, 60, 60);
+    doc.setFont(undefined, 'normal');
+    doc.text('Merchant Transaction ID:', 15, 42);
+    doc.setFont(undefined, 'bold');
+    doc.text(merchantId, 60, 42);
   
     doc.setFont(undefined, 'normal');
-    doc.text('Merchant Transaction ID:', 25, 52);
+    doc.text('EPS Transaction ID:', 15, 48);
     doc.setFont(undefined, 'bold');
-    doc.text(merchantId, 70, 52);
-  
-    doc.setFont(undefined, 'normal');
-    doc.text('EPS Transaction ID:', 25, 58);
-    doc.setFont(undefined, 'bold');
-    doc.text(extractEPSTransactionId(), 70, 58);
+    doc.text(extractEPSTransactionId(), 60, 48);
   
     // Payment Status
     doc.setTextColor(34, 139, 34);
     doc.setFont(undefined, 'bold');
-    doc.text(' Payment Verified', 25, 64);
+    doc.text(' Payment Verified', 15, 54);
   
     // Ticket Section Header
     doc.setFontSize(9);
     doc.setTextColor(207, 121, 84);
     doc.setFont(undefined, 'bold');
-    doc.text('YOUR TICKET INFORMATION', 25, 72);
+    doc.text('YOUR TICKET INFORMATION', 15, 60);
   
     // Ticket List
-    let yPos = 77;
+    let yPos = 65;
     doc.setFontSize(8);
     doc.setTextColor(0, 0, 0);
   
     ticketData.data.tickets.forEach((ticket, index) => {
       doc.setFont(undefined, 'bold');
-      doc.text(`Ticket ${index + 1}:`, 25, yPos);
+      doc.text(`Ticket ${index + 1}:`, 15, yPos);
       doc.setFont(undefined, 'normal');
-      doc.text(ticket.ticket_no, 45, yPos);
-      doc.text(`Mobile: ${ticket.mobile || 'Not Provided'}`, 80, yPos);
+      doc.text(ticket.ticket_no, 35, yPos);
+      doc.text(`Mobile: ${ticket.mobile || 'Not Provided'}`, 75, yPos);
       yPos += 5;
     });
   
@@ -147,12 +145,13 @@ const Success = () => {
     doc.setTextColor(100, 100, 100);
     doc.setFont(undefined, 'bold');
     doc.text('Thank you for your support!', pageWidth / 2, pageHeight - 12, {
-      align: 'center'
+      align: 'center',
     });
   
     // Save File
     doc.save('lottery-ticket-receipt.pdf');
   };
+  
   
   useEffect(() => {
     const verifyPayment = async () => {
