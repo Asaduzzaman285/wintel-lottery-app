@@ -4,7 +4,7 @@ import headerLogo from '../assets/headerlogo_1.png';
 import bgImage from '../assets/wintel-lottery-bg-3.png';
 import payImage from '../assets/pay.png';
 import termimage from '../assets/terms.jpg';
-import { Copyright, Headset, FileText, X } from 'lucide-react';
+import { Copyright, Headset, FileText, X,Clock } from 'lucide-react';
 
 // API Configuration
 const API_CONFIG = {
@@ -320,18 +320,17 @@ const Home = () => {
               Bangladesh Thalassaemia Samity (BTS)
             </h1>
             
-            <h1 className="text-xl font-bold text-blue-800
+            <h1 className="text-xl font-bold text-[#026B39]
                           [@media(max-width:440px)]:text-sm
                           [@media(max-width:360px)]:text-xs
                           whitespace-nowrap">
-              <span className="text-red-600">Lottery 2025</span>
-              <span className="text-purple-800"> (Govt. Approved)</span>
+                     Lottery 2025 (Govt. Approved)
             </h1>
             
             <p className="sm:text-sm text-gray-500
                          [@media(max-width:440px)]:text-xs
                          [@media(max-width:360px)]:text-[10px]">
-              Get your lucky ticket now!
+              Get your ticket now!
             </p>
           </div>
   
@@ -496,6 +495,7 @@ const Home = () => {
 
               {/* Support (Right) */}
               <div className="flex items-center gap-1 text-center leading-none">
+                
                 <Headset className="w-3.5 h-3.5 text-blue-600" />
                 <span className="text-[11px] font-medium text-gray-800">
                   Support :
@@ -504,11 +504,16 @@ const Home = () => {
                   href="tel:09606549134"
                   className="text-[11px] font-semibold text-blue-700 hover:underline"
                 >
-                  09606549134
+                  09606549134 
                 </a>
               </div>
             </div>
-
+            <div className="mt-0 flex items-center justify-end gap-1 " style={{marginBottom:'-5px'}}>
+            <Clock className="w-2.5 h-2.5 text-blue-600" />
+                <span className="text-[9px] font-small text-gray-800">
+                  Sunday to Thursday (10 AM to 6 PM) 
+                </span>
+              </div>
             {/* Submit Button */}
             <button
               onClick={handlePayNow}
@@ -561,7 +566,7 @@ const Home = () => {
             )}
   
             {/* Payment Methods */}
-            <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+            <div className="bg-gray-50 rounded-lg p-2 border border-gray-200">
               <div className="flex items-center justify-center gap-2 mb-2">
                 <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -578,7 +583,7 @@ const Home = () => {
             </div>
 
             {/* Copyright */}
-            <div className="mt-10 w-full bg-[#edf4ff] py-4 text-center text-sm text-gray-700">
+            <div className="mt-10 w-full bg-[#edf4ff] py-2 text-center rounded-lg text-sm text-gray-700">
               <Copyright className="mx-1.5 inline h-3.5 w-3.5 text-gray-600" />
               The site is developed & operated by{' '}
               <a
