@@ -7,13 +7,21 @@ import payImage from '../assets/pay.png';
 import { Copyright, Headset, FileText, X,Clock } from 'lucide-react';
 
 // API Configuration
+// const API_CONFIG = {
+//   baseUrl: 'https://demiapi.bdlotteryticket.com',
+//   processPaymentEndpoint: '/api/v1/eps/process-payment',
+//   verifyPaymentEndpoint: '/api/v1/eps/payment-verification',
+//   token: 'yNGRx3PdjsTfOsaj2BasPWf8gYhLhmJn6lDCj5bc1d7+2Y0PN5+6OIku1mcwAnsY5idarCv5XSqBvGL7lYV+/g==',
+//   merchantToken: '966a5fd435cfa5881bd181c4c5567c7c'
+// };
 const API_CONFIG = {
-  baseUrl: 'https://api.bdlotteryticket.com',
+  baseUrl: 'https://demiapi.bdlotteryticket.com',
   processPaymentEndpoint: '/api/v1/eps/process-payment',
   verifyPaymentEndpoint: '/api/v1/eps/payment-verification',
-  token: 'yNGRx3PdjsTfOsaj2BasPWf8gYhLhmJn6lDCj5bc1d7+2Y0PN5+6OIku1mcwAnsY5idarCv5XSqBvGL7lYV+/g==',
-  merchantToken: 'U2FsdGVkX19enVsX0qbxzB8WOdKhJuGtqaYOe1oH4DQ='
+  token: 'y74VdLnmZoMCi+0EAkdRHwcdNnI3B/8+T9yuV0XQa3ZVBR5LU9lAUXewHmkBmLQ8X8eLzacw2/rEiKi/4OQ/uw==',
+  merchantToken: '966a5fd435cfa5881bd181c4c5567c7c'
 };
+
 
 // Bangladesh Districts Data
 const districts = [
