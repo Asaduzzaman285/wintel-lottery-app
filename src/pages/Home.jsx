@@ -3,7 +3,7 @@ import Select from 'react-select';
 import headerLogo from '../assets/headerlogo_1.png';
 import bgImage from '../assets/wintel-lottery-bg-3.png';
 import payImage from '../assets/pay.png';
-import termimage from '../assets/terms.jpg';
+// import termimage from '../assets/terms.jpg';
 import { Copyright, Headset, FileText, X,Clock } from 'lucide-react';
 
 // API Configuration
@@ -255,30 +255,77 @@ const Home = () => {
       minHeight: '42px'
     })
   };
-
   const TermsModal = () => {
     if (!showTermsModal) return null;
-
+  
     return (
       <div 
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-2 sm:p-4"
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
         onClick={() => setShowTermsModal(false)}
       >
         <div 
-          className="relative max-w-4xl w-full max-h-[90vh] overflow-hidden rounded-lg"
+          className="relative w-full max-w-lg bg-white rounded-lg shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
-          <button
-            onClick={() => setShowTermsModal(false)}
-            className="absolute top-2 right-2 z-10 bg-white/90 p-1.5 rounded-full shadow-md hover:bg-white transition-colors"
-          >
-            <X className="w-5 h-5 text-gray-700" />
-          </button>
-          <img
-            src={termimage}
-            alt="Terms and Conditions"
-            className="w-full h-auto rounded-lg shadow-lg"
-          />
+          {/* Header */}
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-2 rounded-t-lg flex items-center justify-between">
+            <h2 className="text-base font-bold">নিয়মাবলী</h2>
+            <button
+              onClick={() => setShowTermsModal(false)}
+              className="bg-white/20 hover:bg-white/30 p-1 rounded-full transition-colors"
+            >
+              <X className="w-4 h-4 text-white" />
+            </button>
+          </div>
+  
+          {/* Content */}
+          <div className="p-4">
+            <div className="space-y-2 text-gray-800" style={{ fontFamily: 'Arial, sans-serif' }}>
+              <div className="bg-blue-50 border-l-3 border-blue-600 p-2 rounded">
+                <p className="text-[11px] leading-snug">
+                  <span className="font-bold text-blue-700">১.</span> অনুমোদিত ব্যাংক, প্রতিষ্ঠান ও এজেন্ট ছাড়া অন্য কারো নিকট হতে টিকিট ক্রয় করলে ঐ টিকিটের জন্য বাংলাদেশ থ্যালাসেমিয়া সমিতি দায়ী থাকবে না।
+                </p>
+              </div>
+  
+              <div className="bg-green-50 border-l-3 border-green-600 p-2 rounded">
+                <p className="text-[11px] leading-snug">
+                  <span className="font-bold text-green-700">২.</span> নির্ধারিত তারিখে বাংলাদেশ থ্যালাসেমিয়া সমিতি কর্তৃপক্ষ ও বিশিষ্ট ব্যক্তিদের উপস্থিতিতে ঢাকায় ড্র অনুষ্ঠিত হবে।
+                </p>
+              </div>
+  
+              <div className="bg-purple-50 border-l-3 border-purple-600 p-2 rounded">
+                <p className="text-[11px] leading-snug">
+                  <span className="font-bold text-purple-700">৩.</span> ৬ষ্ঠ হতে ৮ম পুরস্কারের ক্ষেত্রে বিজয়ী নম্বর ক,খ,গ, ঘ,ঙ, চ, ছ, জ, ঝ, ঞ প্রত্যেক সিরিজের ক্ষেত্রে প্রযোজ্য হবে।
+                </p>
+              </div>
+  
+              <div className="bg-yellow-50 border-l-3 border-yellow-600 p-2 rounded">
+                <p className="text-[11px] leading-snug">
+                  <span className="font-bold text-yellow-700">৪.</span> বিজয়ীদের টিকিট নম্বর সংবাদপত্রের মাধ্যমে প্রকাশ করা হবে।
+                </p>
+              </div>
+  
+              <div className="bg-red-50 border-l-3 border-red-600 p-2 rounded">
+                <p className="text-[11px] leading-snug">
+                  <span className="font-bold text-red-700">৫.</span> উক্ত প্রকাশের ৩০ দিনের মধ্যে পুরস্কারের জন্য নাম ঠিকানা, সত্যায়িত ছবি ও টিকিট সহ লিখিত দাবী কর্তৃপক্ষের নিকট দাখিল করতে হবে। ডাকযোগে প্রেরিত টিকিট অপ্রাপ্তির জন্য কর্তৃপক্ষ দায়ী থাকবে না।
+                </p>
+              </div>
+  
+              <div className="bg-indigo-50 border-l-3 border-indigo-600 p-2 rounded">
+                <p className="text-[11px] leading-snug">
+                  <span className="font-bold text-indigo-700">৬.</span> টিকিটের গায়ে কোন প্রকার লেখা/অংকন/মুদ্রণ বা অন্য কোন উপায়ে টিকিট বিকৃত করা হলে উক্ত টিকিট পুরস্কারের অযোগ্য বলে বিবেচিত হবে।
+                </p>
+              </div>
+  
+              <div className="bg-gray-100 border-2 border-gray-400 p-2 rounded">
+                <p className="text-[11px] leading-snug font-semibold text-center text-gray-800">
+                  এই লটারী সংক্রান্ত যে কোন বিষয়ে বাংলাদেশ থ্যালাসেমিয়া সমিতি কর্তৃপক্ষের সিদ্ধান্তই চূড়ান্ত বলে বিবেচিত হবে
+                </p>
+              </div>
+            </div>
+          </div>
+  
+
         </div>
       </div>
     );
