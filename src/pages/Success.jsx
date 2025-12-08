@@ -25,7 +25,6 @@ const Success = () => {
     const fallback = searchParams.get("EPSTransactionId");
     return fallback?.trim() || "Not Provided";
   };
-
   const downloadPDFReceipt = async (dataOverride = null) => {
     const ticketData = dataOverride || verificationData;
     if (!ticketData?.data?.tickets) return;
@@ -40,31 +39,20 @@ const Success = () => {
     const pageWidth = 210;
     const pageHeight = 100;
   
-    // Orange diagonal stripe background
-    doc.setFillColor(207, 121, 84);
-    for (let i = -50; i < pageWidth + 50; i += 8) {
-      doc.setDrawColor(207, 121, 84);
-      doc.setLineWidth(4);
-      doc.line(i, 0, i + 50, pageHeight);
-  
-      doc.setDrawColor(255, 255, 255);
-      doc.setLineWidth(4);
-      doc.line(i + 4, 0, i + 54, pageHeight);
-    }
-  
-    // Main white content box
+    // Simple white background (no diagonal stripes)
     doc.setFillColor(255, 255, 255);
-    doc.roundedRect(10, 10, pageWidth - 20, pageHeight - 20, 3, 3, 'F');
+    doc.rect(0, 0, pageWidth, pageHeight, 'F');
   
-    // Left orange accent
-    doc.setFillColor(207, 121, 84);
-    doc.rect(10, 10, 8, pageHeight - 20, 'F');
+    // Optional: Add a subtle border (remove if you want completely plain)
+    doc.setDrawColor(200, 200, 200);
+    doc.setLineWidth(0.5);
+    doc.rect(10, 10, pageWidth - 20, pageHeight - 20);
   
     // ✅ Header Logo - LEFT ALIGNED
     try {
-      const imgWidth = 35; // Logo width
-      const imgHeight = 18; // Reduced height
-      doc.addImage(headerLogo, 'PNG', 20, 15, imgWidth, imgHeight);
+      const imgWidth = 35;
+      const imgHeight = 18;
+      doc.addImage(headerLogo, 'PNG', 15, 15, imgWidth, imgHeight);
     } catch (err) {
       console.warn("Header logo not loaded:", err);
     }
@@ -73,14 +61,14 @@ const Success = () => {
     doc.setFontSize(11);
     doc.setFont(undefined, 'bold');
     doc.setTextColor(128, 0, 128); // purple
-    doc.text('Bangladesh Thalassaemia Samity (BTS)', 58, 22);
+    doc.text('Bangladesh Thalassaemia Samity (BTS)', 53, 22);
   
     doc.setFontSize(11);
     doc.setFont(undefined, 'bold');
     doc.setTextColor(2, 107, 57); // green
-    doc.text('Lottery 2025 (Govt. Approved)', 58, 28);
+    doc.text('Lottery 2025 (Govt. Approved)', 53, 28);
   
-    // Current Time Block - LEFT ALIGNED with proper margin
+    // Current Time Block
     const now = new Date();
     const formattedTime = now.toLocaleString('en-US', {
       year: 'numeric',
@@ -93,60 +81,65 @@ const Success = () => {
     doc.setFontSize(7);
     doc.setTextColor(100, 100, 100);
     doc.setFont(undefined, 'normal');
-    doc.text(`Generated: ${formattedTime}`, 20, 38);
+    doc.text(`Generated: ${formattedTime}`, 15, 38);
   
-    // Divider - with proper margins
-    doc.setDrawColor(207, 121, 84);
-    doc.setLineWidth(0.5);
-    doc.line(20, 41, pageWidth - 15, 41);
+    // Divider
+    doc.setDrawColor(200, 200, 200);
+    doc.setLineWidth(0.3);
+    doc.line(15, 41, pageWidth - 15, 41);
   
-    // Merchant / EPS Data - LEFT ALIGNED with proper margin
+    // Merchant / EPS Data
     const merchantId = searchParams.get('MerchantTransactionId') || 'N/A';
   
     doc.setFontSize(8);
     doc.setTextColor(60, 60, 60);
     doc.setFont(undefined, 'normal');
-    doc.text('Merchant Transaction ID:', 20, 46);
+    doc.text('Merchant Transaction ID:', 15, 46);
     doc.setFont(undefined, 'bold');
-    doc.text(merchantId, 70, 46);
+    doc.text(merchantId, 65, 46);
   
     doc.setFont(undefined, 'normal');
-    doc.text('EPS Transaction ID:', 20, 51);
+    doc.text('EPS Transaction ID:', 15, 51);
     doc.setFont(undefined, 'bold');
-    doc.text(extractEPSTransactionId(), 70, 51);
+    doc.text(extractEPSTransactionId(), 65, 51);
   
     // Payment Status
     doc.setTextColor(34, 139, 34);
     doc.setFont(undefined, 'bold');
-    doc.text('Payment Verified', 20, 56);
+    doc.text('Payment Verified', 15, 56);
   
     // Ticket Section Header
     doc.setFontSize(9);
-    doc.setTextColor(207, 121, 84);
+    doc.setTextColor(0, 0, 0);
     doc.setFont(undefined, 'bold');
-    doc.text('YOUR TICKET INFORMATION', 20, 61);
+    doc.text('YOUR TICKET INFORMATION', 15, 62);
   
-    // Ticket List - with proper margins
-    let yPos = 65;
+    // Divider below header
+    doc.setDrawColor(200, 200, 200);
+    doc.setLineWidth(0.3);
+    doc.line(15, 64, pageWidth - 15, 64);
+  
+    // Ticket List
+    let yPos = 69;
     doc.setFontSize(8);
     doc.setTextColor(0, 0, 0);
   
     ticketData.data.tickets.forEach((ticket, index) => {
-      // Check if we're too close to the bottom
       if (yPos > pageHeight - 15) return;
       
       doc.setFont(undefined, 'bold');
-      doc.text(`Ticket ${index + 1}:`, 20, yPos);
+      doc.text(`Ticket ${index + 1}:`, 15, yPos);
       doc.setFont(undefined, 'normal');
-      doc.text(ticket.ticket_no, 40, yPos);
-      doc.text(`Mobile: ${ticket.mobile || 'Not Provided'}`, 90, yPos);
+      doc.text(ticket.ticket_no, 35, yPos);
+      doc.text(`Mobile: ${ticket.mobile || 'Not Provided'}`, 85, yPos);
       yPos += 5;
     });
   
   
+  
     // Save File
     doc.save('lottery-ticket-receipt.pdf');
-  };
+  };                    
   
   
   useEffect(() => {
