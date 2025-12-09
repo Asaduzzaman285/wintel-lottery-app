@@ -504,40 +504,50 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Prize Details */}
-            <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg p-3 border-2 border-amber-200">
-              <div className="text-center mb-2">
-                <h3 className="text-sm font-bold text-gray-800">পুরস্কারের তালিকা</h3>
-                <p className="text-xs text-gray-600">ড্র: ২৯ জানুয়ারি ২০২৬</p>
-              </div>
+        {/* Prize Details */}
+<div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg p-3 border-2 border-amber-200">
+  <div className="text-center mb-2">
+    <h3 className="text-sm font-bold text-gray-800">পুরস্কারের তালিকা</h3>
+    <p className="text-xs text-gray-600">ড্র: ২৩ জানুয়ারি ২০২৬ ইং</p>
+  </div>
 
-              <div className="grid grid-cols-2 gap-1.5 text-xs">
-                <div className="bg-white/80 rounded p-1.5">
-                  <span className="font-semibold text-amber-700">১ম পুরস্কার:</span> (১টি) ফ্ল্যাট/নগদ ৩০ লক্ষ টাকা
-                </div>
-                <div className="bg-white/80 rounded p-1.5">
-                  <span className="font-semibold text-amber-700">২য় পুরস্কার:</span> (১টি) গাড়ি/৭ লক্ষ টাকা
-                </div>
-                <div className="bg-white/80 rounded p-1.5">
-                  <span className="font-semibold text-amber-700">৩য় পুরস্কার:</span> (১টি) মোটরসাইকেল/১ লক্ষ ৫০ হাজার টাকা
-                </div>
-                <div className="bg-white/80 rounded p-1.5">
-                  <span className="font-semibold text-amber-700">৪র্থ পুরস্কার:</span> (১টি) নগদ ৫০ হাজার টাকা
-                </div>
-                <div className="bg-white/80 rounded p-1.5">
-                  <span className="font-semibold text-amber-700">৫ম পুরস্কার:</span> (১টি) নগদ ৩০ হাজার টাকা
-                </div>
-                <div className="bg-white/80 rounded p-1.5">
-                  <span className="font-semibold text-amber-700">৬ষ্ঠ পুরস্কার:</span> (১০টি) প্রতিটি ৫ হাজার টাকা
-                </div>
-                <div className="bg-white/80 rounded p-1.5">
-                  <span className="font-semibold text-amber-700">৭ম পুরস্কার:</span> (১০০টি) প্রতিটি ২ হাজার টাকা
-                </div>
-                <div className="bg-white/80 rounded p-1.5">
-                  <span className="font-semibold text-amber-700">৮ম পুরস্কার:</span> (৮২০টি) প্রতিটি  ১ হাজার টাকা
-                </div>
-              </div>
-            </div>
+  <div className="grid grid-cols-2 gap-1.5 text-xs">
+    <div className="bg-white/80 rounded p-1.5">
+      <span className="font-semibold text-amber-700">১ম পুরস্কার:</span> (১টি) ফ্ল্যাট/নগদ ৩০ লক্ষ টাকা
+    </div>
+    <div className="bg-white/80 rounded p-1.5">
+      <span className="font-semibold text-amber-700">২য় পুরস্কার:</span> (১টি) গাড়ি/৭ লক্ষ টাকা
+    </div>
+    <div className="bg-white/80 rounded p-1.5">
+      <span className="font-semibold text-amber-700">৩য় পুরস্কার:</span> (১টি) মোটরসাইকেল/১ লক্ষ ৫০ হাজার টাকা
+    </div>
+    <div className="bg-white/80 rounded p-1.5">
+      <span className="font-semibold text-amber-700">৪র্থ পুরস্কার:</span> (১টি) নগদ ৫০ হাজার টাকা
+    </div>
+    <div className="bg-white/80 rounded p-1.5">
+      <span className="font-semibold text-amber-700">৫ম পুরস্কার:</span> (১টি) নগদ ৩০ হাজার টাকা
+    </div>
+    <div className="bg-white/80 rounded p-1.5">
+      <span className="font-semibold text-amber-700">৬ষ্ঠ পুরস্কার:</span> (১০টি) প্রতিটি ৫ হাজার টাকা
+    </div>
+    <div className="bg-white/80 rounded p-1.5">
+      <span className="font-semibold text-amber-700">৭ম পুরস্কার:</span> (১০০টি) প্রতিটি ২ হাজার টাকা
+    </div>
+    <div className="bg-white/80 rounded p-1.5">
+      <span className="font-semibold text-amber-700">৮ম পুরস্কার:</span> (৮২০টি) প্রতিটি  ১ হাজার টাকা
+    </div>
+  </div>
+
+  {/* Additional Info Below Grid */}
+  <div className="mt-3 text-center space-y-1">
+    <p className="text-xs text-gray-700 font-semibold">
+      সর্বমোট ৫০ লক্ষ টাকার ৯৩৫ টি পুরষ্কার
+    </p>
+    <p className="text-xs text-white font-bold bg-red-600 inline-block px-3 py-1 rounded">
+      ড্র: ২৩ জানুয়ারি ২০২৬ ইং
+    </p>
+  </div>
+</div>
 
             {/* Terms & Conditions + Support Line */}
             <div className="mt-2 flex items-center justify-between gap-2">
