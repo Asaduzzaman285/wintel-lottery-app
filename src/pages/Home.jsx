@@ -507,7 +507,7 @@ const Home = () => {
 <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg p-3 border-2 border-amber-200">
   <div className="text-center mb-2">
     <h3 className="text-sm font-bold text-gray-800">পুরস্কারের তালিকা</h3>
-    <p className="text-xs text-gray-600">ড্র: ২৯ জানুয়ারি ২০২৬</p>
+    {/* <p className="text-xs text-gray-600">ড্র: ২৯ জানুয়ারি ২০২৬</p> */}
   </div>
 
   <div className="grid grid-cols-2 gap-1.5 text-xs">
