@@ -6,11 +6,13 @@ import { Copyright, Headset, Clock } from 'lucide-react';
 
 // SAME API CONFIG USED IN SUCCESS & CANCEL
 const API_CONFIG = {
-  baseUrl: 'https://api.bdlotteryticket.com',
-  verificationEndpoint: '/api/v1/eps/payment-verification',
-  token: 'yNGRx3PdjsTfOsaj2BasPWf8gYhLhmJn6lDCj5bc1d7+2Y0PN5+6OIku1mcwAnsY5idarCv5XSqBvGL7lYV+/g==',
-  merchantToken: '966a5fd435cfa5881bd181c4c5567c7c'
+  baseUrl: import.meta.env.VITE_APP_API_BASE_URL,
+  verifyPaymentEndpoint: import.meta.env.VITE_APP_VERIFY_PAYMENT,
+  processPaymentEndpoint: import.meta.env.VITE_APP_PROCESS_PAYMENT,
+  token: import.meta.env.VITE_APP_TOKEN,
+  merchantToken: import.meta.env.VITE_APP_MERCHANT_TOKEN
 };
+
 
 const Fail = () => {
   const navigate = useNavigate();
@@ -63,7 +65,7 @@ const Fail = () => {
         formData.append('eps_transaction_id', epsTxnId);
 
         const response = await fetch(
-          `${API_CONFIG.baseUrl}${API_CONFIG.verificationEndpoint}`,
+          `${API_CONFIG.baseUrl}${API_CONFIG.verifyPaymentEndpoint}`,
           {
             method: "POST",
             headers: { Accept: "application/json" },
