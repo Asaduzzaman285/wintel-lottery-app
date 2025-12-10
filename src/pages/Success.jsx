@@ -5,7 +5,7 @@ import bgImage from '../assets/wintel-lottery-bg-3.png';
 import { Headset,Copyright,Clock } from 'lucide-react';
 
 const API_CONFIG = {
-  baseUrl: 'https://prodapi.bdlotteryticket.com',
+  baseUrl: 'https://api.bdlotteryticket.com',
   verificationEndpoint: '/api/v1/eps/payment-verification',
   token: 'yNGRx3PdjsTfOsaj2BasPWf8gYhLhmJn6lDCj5bc1d7+2Y0PN5+6OIku1mcwAnsY5idarCv5XSqBvGL7lYV+/g==', // ✅ Changed to demo token
   merchantToken: '966a5fd435cfa5881bd181c4c5567c7c'
@@ -138,9 +138,10 @@ const Success = () => {
   
  
   
+  
     // Save File
     doc.save('lottery-ticket-receipt.pdf');
-  };
+  };                    
   
   
   useEffect(() => {

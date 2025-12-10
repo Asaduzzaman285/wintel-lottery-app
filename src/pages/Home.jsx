@@ -7,7 +7,7 @@ import payImage from '../assets/pay.png';
 import { Copyright, Headset, FileText, X,Clock } from 'lucide-react';
 
 const API_CONFIG = {
-  baseUrl: 'https://prodapi.bdlotteryticket.com', // ✅ Fixed typo
+  baseUrl: 'https://api.bdlotteryticket.com',
   processPaymentEndpoint: '/api/v1/eps/process-payment',
   verifyPaymentEndpoint: '/api/v1/eps/payment-verification',
   token: 'yNGRx3PdjsTfOsaj2BasPWf8gYhLhmJn6lDCj5bc1d7+2Y0PN5+6OIku1mcwAnsY5idarCv5XSqBvGL7lYV+/g==', 
@@ -279,64 +279,68 @@ const Home = () => {
             </button>
           </div>
   
-              {/* Content */}
-        <div className="p-4">
-          <div className="space-y-2 text-gray-800" style={{ fontFamily: 'Arial, sans-serif' }}>
-            <div className="bg-blue-50 border-l-3 border-blue-600 p-2 rounded">
-              <p className="text-[11px] leading-snug">
-                <span className="font-bold text-blue-700">১.</span> অনুমোদিত ব্যাংক, প্রতিষ্ঠান ও এজেন্ট ছাড়া অন্য কারো নিকট হতে টিকিট ক্রয় করলে ঐ টিকিটের জন্য বাংলাদেশ থ্যালাসেমিয়া সমিতি দায়ী থাকবে না।
-              </p>
-            </div>
+          <div className="p-4">
+  <div className="space-y-2 text-gray-800" style={{ fontFamily: 'Arial, sans-serif' }}>
 
-            <div className="bg-green-50 border-l-3 border-green-600 p-2 rounded">
-              <p className="text-[11px] leading-snug">
-                <span className="font-bold text-green-700">২.</span> নির্ধারিত তারিখে বাংলাদেশ থ্যালাসেমিয়া সমিতি কর্তৃপক্ষ ও বিশিষ্ট ব্যক্তিদের উপস্থিতিতে ঢাকায় ড্র অনুষ্ঠিত হবে।
-              </p>
-            </div>
+    {/* 1 */}
+    <div className="bg-blue-50 border-l-3 border-blue-600 p-2 rounded">
+      <p className="text-[11px] leading-snug">
+        <span className="font-bold text-blue-700">১.</span>
+        অনুমোদিত ব্যাংক, প্রতিষ্ঠান ও এই পোর্টাল ব্যতীত অন্য কোনো মাধ্যম হতে টিকেট ক্রয় করলে ঐ টিকেটের জন্য বাংলাদেশ থ্যালাসামিয়া সমিতি ও সংশ্লিষ্ট কর্তৃপক্ষ দায়ী থাকবে না।
+      </p>
+    </div>
 
-            <div className="bg-purple-50 border-l-3 border-purple-600 p-2 rounded">
-              <p className="text-[11px] leading-snug">
-                <span className="font-bold text-purple-700">৩.</span> ৬ষ্ঠ হতে ৮ম পুরস্কারের ক্ষেত্রে বিজয়ী নম্বর ক,খ,গ, ঘ,ঙ, চ, ছ, জ, ঝ, ঞ প্রত্যেক সিরিজের ক্ষেত্রে প্রযোজ্য হবে।
-              </p>
-            </div>
+    {/* 2 */}
+    <div className="bg-green-50 border-l-3 border-green-600 p-2 rounded">
+      <p className="text-[11px] leading-snug">
+        <span className="font-bold text-green-700">২.</span>
+        ক্রয়কৃত লটারীর টিকেট নম্বর ও কনফার্মেশন কেবলমাত্র "BTS Lottery" আইডি থেকে এসএমএস এর মাধ্যমে পাঠানো হবে।
+      </p>
+    </div>
 
-            <div className="bg-yellow-50 border-l-3 border-yellow-600 p-2 rounded">
-              <p className="text-[11px] leading-snug">
-                <span className="font-bold text-yellow-700">৪.</span> বিজয়ীদের টিকিট নম্বর সংবাদপত্রের মাধ্যমে প্রকাশ করা হবে।
-              </p>
-            </div>
+    {/* 3 */}
+    <div className="bg-purple-50 border-l-3 border-purple-600 p-2 rounded">
+      <p className="text-[11px] leading-snug">
+        <span className="font-bold text-purple-700">৩.</span>
+        নির্ধারিত তারিখে বাংলাদেশ থ্যালাসেমিয়া সমিতি কর্তৃপক্ষ ও বিশিষ্ট ব্যাক্তিদের উপস্থিতিতে ঢাকায় ড্র অনুষ্ঠিত হবে।
+      </p>
+    </div>
 
-            <div className="bg-red-50 border-l-3 border-red-600 p-2 rounded">
-              <p className="text-[11px] leading-snug">
-                <span className="font-bold text-red-700">৫.</span> উক্ত প্রকাশের ৩০ দিনের মধ্যে পুরস্কারের জন্য নাম ঠিকানা, সত্যায়িত ছবি ও টিকিট সহ লিখিত দাবী কর্তৃপক্ষের নিকট দাখিল করতে হবে। ডাকযোগে প্রেরিত টিকিট অপ্রাপ্তির জন্য কর্তৃপক্ষ দায়ী থাকবে না।
-              </p>
-            </div>
+    {/* 4 */}
+    <div className="bg-yellow-50 border-l-3 border-yellow-600 p-2 rounded">
+      <p className="text-[11px] leading-snug">
+        <span className="font-bold text-yellow-700">৪.</span>
+        লটারীর ড্র এর নির্ধারিত তারিখ <strong>২৩ জানুয়ারী ২০২৬</strong>; বিজয়ীদের তালিকা সংবাদপত্রের মাধ্যমে প্রকাশ করা হবে। সেই সাথে বর্তমান ওয়েবসাইটেও (bdlotteryticket.com) বিজয়ীদের তালিকা প্রকাশ হবে।
+      </p>
+    </div>
 
-            <div className="bg-indigo-50 border-l-3 border-indigo-600 p-2 rounded">
-              <p className="text-[11px] leading-snug">
-                <span className="font-bold text-indigo-700">৬.</span> টিকিটের গায়ে কোন প্রকার লেখা/অংকন/মুদ্রণ বা অন্য কোন উপায়ে টিকিট বিকৃত করা হলে উক্ত টিকিট পুরস্কারের অযোগ্য বলে বিবেচিত হবে।
-              </p>
-            </div>
+    {/* 5 */}
+    <div className="bg-red-50 border-l-3 border-red-600 p-2 rounded">
+      <p className="text-[11px] leading-snug">
+        <span className="font-bold text-red-700">৫.</span>
+        ফলাফল প্রকাশের ৩০ দিনের মধ্যে বিজয়ীদের পুরষ্কারের জন্য নাম ঠিকানা, সত্যায়িত ছবি ও টিকেট প্রাপ্তির এসএমএস সহ লিখিত দাবী কর্তৃপক্ষের নিকট দাখিল করতে হবে। অনলাইন টিকেটের ক্ষেত্রে টিকেটহোল্ডারকে হেল্পলাইনে (09606541934) অথবা support@wintelbd.com এ যোগাযোগ করার জন্য অনুরোধ জানানো হচ্ছে।
+      </p>
+    </div>
 
-            <div className="bg-teal-50 border-l-3 border-teal-600 p-2 rounded">
-              <p className="text-[11px] leading-snug">
-                <span className="font-bold text-teal-700">৭.</span> লটারীর ড্র এর নির্ধারিত তারিখ ২৩ জানুয়ারী ২০২৬; বিজয়ীদের তালিকা সংবাদপত্রের মাধ্যমে প্রকাশ করা হবে। সেই সাথে বর্তমান ওয়েবসাইটেও (bdlotteryticket.com) বিজয়ীদের তালিকা প্রকাশ হবে।
-              </p>
-            </div>
+    {/* 6 */}
+    <div className="bg-indigo-50 border-l-3 border-indigo-600 p-2 rounded">
+      <p className="text-[11px] leading-snug">
+        <span className="font-bold text-indigo-700">৬.</span>
+        ৬ষ্ঠ হতে ৮ম পুরস্কারের ক্ষেত্রে বিজয়ী নম্বর ক,খ,গ, ঘ,ঙ, চ, ছ, জ, ঝ, ঞ প্রত্যেক সিরিজের ক্ষেত্রে প্রযোজ্য হবে।
+      </p>
+    </div>
 
-            <div className="bg-orange-50 border-l-3 border-orange-600 p-2 rounded">
-              <p className="text-[11px] leading-snug">
-                <span className="font-bold text-orange-700">৮.</span> ক্রয়কৃত লটারীর টিকেট নম্বর ও কনফার্মেশন কেবলমাত্র "BTS Lottery" আইডি থেকে পাঠানো হবে।
-              </p>
-            </div>
+    {/* Final Statement */}
+    <div className="bg-gray-100 border-2 border-gray-400 p-2 rounded">
+      <p className="text-[11px] leading-snug font-semibold text-center text-gray-800">
+        এই লটারী সংক্রান্ত যে কোন বিষয়ে বাংলাদেশ থ্যালাসেমিয়া সমিতি কর্তৃপক্ষের সিদ্ধান্তই চূড়ান্ত বলে বিবেচিত হবে।
+      </p>
+    </div>
 
-            <div className="bg-gray-100 border-2 border-gray-400 p-2 rounded">
-              <p className="text-[11px] leading-snug font-semibold text-center text-gray-800">
-                এই লটারী সংক্রান্ত যে কোন বিষয়ে বাংলাদেশ থ্যালাসেমিয়া সমিতি কর্তৃপক্ষের সিদ্ধান্তই চূড়ান্ত বলে বিবেচিত হবে
-              </p>
-            </div>
-          </div>
-        </div>
+  </div>
+</div>
+
+
         </div>
       </div>
     );
@@ -503,11 +507,11 @@ const Home = () => {
               </div>
             </div>
 
-{/* Prize Details */}
+        {/* Prize Details */}
 <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg p-3 border-2 border-amber-200">
   <div className="text-center mb-2">
     <h3 className="text-sm font-bold text-gray-800">পুরস্কারের তালিকা</h3>
-    {/* <p className="text-xs text-gray-600">ড্র: ২৯ জানুয়ারি ২০২৬</p> */}
+    {/* <p className="text-xs text-gray-600">ড্র: ২৩ জানুয়ারি ২০২৬ ইং</p> */}
   </div>
 
   <div className="grid grid-cols-2 gap-1.5 text-xs">
