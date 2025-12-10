@@ -137,9 +137,10 @@ const Success = () => {
   
  
   
+  
     // Save File
     doc.save('lottery-ticket-receipt.pdf');
-  };
+  };                    
   
   
   useEffect(() => {
