@@ -4,11 +4,14 @@ import headerLogo from '../assets/headerlogo_1.png';
 import bgImage from '../assets/wintel-lottery-bg-3.png';
 import { Headset,Copyright,Clock } from 'lucide-react';
 // API Configuration
+
+
 const API_CONFIG = {
-  baseUrl: 'https://api.bdlotteryticket.com',
-  verificationEndpoint: '/api/v1/eps/payment-verification',
-  token: 'yNGRx3PdjsTfOsaj2BasPWf8gYhLhmJn6lDCj5bc1d7+2Y0PN5+6OIku1mcwAnsY5idarCv5XSqBvGL7lYV+/g==',
-  merchantToken: 'U2FsdGVkX19enVsX0qbxzB8WOdKhJuGtqaYOe1oH4DQ='
+  baseUrl: import.meta.env.VITE_APP_API_BASE_URL,
+  processPaymentEndpoint: import.meta.env.VITE_APP_PROCESS_PAYMENT,
+  verifyPaymentEndpoint: import.meta.env.VITE_APP_VERIFY_PAYMENT,
+  token: import.meta.env.VITE_APP_TOKEN,
+  merchantToken: import.meta.env.VITE_APP_MERCHANT_TOKEN
 };
 
 const Success = () => {
@@ -161,7 +164,7 @@ const Success = () => {
         formData.append('eps_transaction_id', epsTxnId);
   
         const response = await fetch(
-          `${API_CONFIG.baseUrl}${API_CONFIG.verificationEndpoint}`,
+          `${API_CONFIG.baseUrl}${API_CONFIG.verifyPaymentEndpoint}`,
           {
             method: "POST",
             headers: { "Accept": "application/json" },

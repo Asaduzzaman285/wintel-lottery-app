@@ -8,11 +8,11 @@ import { Copyright, Headset, FileText, X,Clock } from 'lucide-react';
 
 // API Configuration
 const API_CONFIG = {
-  baseUrl: 'https://api.bdlotteryticket.com',
-  processPaymentEndpoint: '/api/v1/eps/process-payment',
-  verifyPaymentEndpoint: '/api/v1/eps/payment-verification',
-  token: 'yNGRx3PdjsTfOsaj2BasPWf8gYhLhmJn6lDCj5bc1d7+2Y0PN5+6OIku1mcwAnsY5idarCv5XSqBvGL7lYV+/g==',
-  merchantToken: 'U2FsdGVkX19enVsX0qbxzB8WOdKhJuGtqaYOe1oH4DQ='
+  baseUrl: import.meta.env.VITE_APP_API_BASE_URL,
+  processPaymentEndpoint: import.meta.env.VITE_APP_PROCESS_PAYMENT,
+  verifyPaymentEndpoint: import.meta.env.VITE_APP_VERIFY_PAYMENT,
+  token: import.meta.env.VITE_APP_TOKEN,
+  merchantToken: import.meta.env.VITE_APP_MERCHANT_TOKEN
 };
 
 // Bangladesh Districts Data
@@ -137,15 +137,15 @@ const Home = () => {
   };
 
   const handlePayNow = async () => {
-    console.log('🚀 Pay Now button clicked!');
+    // console.log('🚀 Pay Now button clicked!');
     
     if (!validateForm()) {
-      console.log('❌ Validation failed');
+      // console.log('❌ Validation failed');
       return;
     }
 
     setIsLoading(true);
-    console.log('=== STARTING PAYMENT PROCESS ===');
+    // console.log('=== STARTING PAYMENT PROCESS ===');
 
     try {
       const totalPrice = formData.quantity * 20;
@@ -163,7 +163,7 @@ const Home = () => {
         cancelUrl: `${window.location.origin}/cancel`
       };
 
-      console.log('📦 Payment Data:', paymentData);
+      // console.log('📦 Payment Data:', paymentData);
 
       // Create FormData
       const formDataPayload = new FormData();
@@ -172,7 +172,7 @@ const Home = () => {
       });
 
       const apiUrl = `${API_CONFIG.baseUrl}${API_CONFIG.processPaymentEndpoint}`;
-      console.log('🌐 API URL:', apiUrl);
+      // console.log('🌐 API URL:', apiUrl);
 
       // Make API call
       const response = await fetch(apiUrl, {
@@ -183,12 +183,12 @@ const Home = () => {
         body: formDataPayload
       });
 
-      console.log('📡 Response Status:', response.status);
-      console.log('📡 Response OK:', response.ok);
+      // console.log('📡 Response Status:', response.status);
+      // console.log('📡 Response OK:', response.ok);
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('❌ Server Error Response:', errorText);
+        // console.error('❌ Server Error Response:', errorText);
         
         setDebugInfo({
           status: response.status,
@@ -200,7 +200,7 @@ const Home = () => {
       }
 
       const data = await response.json();
-      console.log('✅ API Response:', data);
+      // console.log('✅ API Response:', data);
 
       setDebugInfo({
         status: response.status,
@@ -210,9 +210,9 @@ const Home = () => {
       // Check for successful response and redirect URL
       if (data.status === 'success' && data.data?.InitializeResponse?.RedirectURL) {
         const redirectURL = data.data.InitializeResponse.RedirectURL;
-        console.log('✅ Payment Initialized Successfully!');
-        console.log('🎫 Transaction ID:', data.data.InitializeResponse.TransactionId);
-        console.log('🔗 Redirecting to:', redirectURL);
+        // console.log('✅ Payment Initialized Successfully!');
+        // console.log('🎫 Transaction ID:', data.data.InitializeResponse.TransactionId);
+        // console.log('🔗 Redirecting to:', redirectURL);
 
         // Small delay to ensure logs are visible
         setTimeout(() => {
