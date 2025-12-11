@@ -13,8 +13,10 @@
 
     "dev:axentec": "env-cmd -f .env.axentec vite --host 0.0.0.0 --port 3000",
     "build:axentec": "env-cmd -f .env.axentec vite build",
-      "dev:prod": "env-cmd -f .env.prod vite --host 0.0.0.0 --port 3000",
-    "build:prod": "env-cmd -f .env.prod vite build"
+    "dev:prod": "env-cmd -f .env.prod vite --host 0.0.0.0 --port 3000",
+    "build:prod": "env-cmd -f .env.prod vite build",
+    "dev:rockstreamer": "env-cmd -f .env.rockstreamer vite --host 0.0.0.0 --port 3000",
+    "build:rockstreamer": "env-cmd -f .env.rockstreamer vite build"
   },
   "dependencies": {
     "lucide-react": "^0.555.0",
