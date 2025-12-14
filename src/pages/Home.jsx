@@ -101,7 +101,7 @@ const Home = () => {
   // Check if merchant token is for NAGAD
   const isNagadPayment = API_CONFIG.merchantToken === 'a2fb89070bc29c0988dafa03f971af20176e1293a50d5';
   const paymentMethodName = isNagadPayment ? 'NAGAD' : 'EPS';
-  
+
   const paymentMethodImage = isNagadPayment ? nagadPayImage : payImage;
 
   const handleInputChange = (e) => {
@@ -596,7 +596,7 @@ const Home = () => {
             {/* Submit Button */}
             <button
               onClick={handlePayNow}
-              disabled={isLoading}
+              disabled={isLoading || isNagadPayment}
               className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-3 rounded-lg hover:from-blue-700 hover:to-cyan-600 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
             >
               {isLoading ? (
@@ -607,11 +607,12 @@ const Home = () => {
                   </svg>
                   Processing Payment...
                 </>
+              ) : isNagadPayment ? (
+                <>Coming Soon</>
               ) : (
                 <>Pay Now (৳)</>
               )}
             </button>
-
             {/* Debug Toggle */}
             {/* <button
               onClick={() => setDebugMode(!debugMode)}
