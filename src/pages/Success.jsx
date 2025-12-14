@@ -4,11 +4,14 @@ import headerLogo from '../assets/headerlogo_1.png';
 import bgImage from '../assets/wintel-lottery-bg-3.png';
 import { Headset,Copyright,Clock } from 'lucide-react';
 // API Configuration
+
+
 const API_CONFIG = {
-  baseUrl: 'https://demoapi.bdlotteryticket.com',
-  verificationEndpoint: '/api/v1/eps/payment-verification',
-  token: 'y74VdLnmZoMCi+0EAkdRHwcdNnI3B/8+T9yuV0XQa3ZVBR5LU9lAUXewHmkBmLQ8X8eLzacw2/rEiKi/4OQ/uw==',
-  merchantToken: 'U2FsdGVkX19enVsX0qbxzB8WOdKhJuGtqaYOe1oH4DQ='
+  baseUrl: import.meta.env.VITE_APP_API_BASE_URL,
+  processPaymentEndpoint: import.meta.env.VITE_APP_PROCESS_PAYMENT,
+  verifyPaymentEndpoint: import.meta.env.VITE_APP_VERIFY_PAYMENT,
+  token: import.meta.env.VITE_APP_TOKEN,
+  merchantToken: import.meta.env.VITE_APP_MERCHANT_TOKEN
 };
 
 const Success = () => {
@@ -25,7 +28,6 @@ const Success = () => {
     const fallback = searchParams.get("EPSTransactionId");
     return fallback?.trim() || "Not Provided";
   };
-
   const downloadPDFReceipt = async (dataOverride = null) => {
     const ticketData = dataOverride || verificationData;
     if (!ticketData?.data?.tickets) return;
@@ -136,11 +138,14 @@ const Success = () => {
       yPos += 5;
     });
   
-
+ 
+  
   
     // Save File
     doc.save('lottery-ticket-receipt.pdf');
-  };
+  };                    
+  
+  
   useEffect(() => {
     const verifyPayment = async () => {
       try {
@@ -159,7 +164,7 @@ const Success = () => {
         formData.append('eps_transaction_id', epsTxnId);
   
         const response = await fetch(
-          `${API_CONFIG.baseUrl}${API_CONFIG.verificationEndpoint}`,
+          `${API_CONFIG.baseUrl}${API_CONFIG.verifyPaymentEndpoint}`,
           {
             method: "POST",
             headers: { "Accept": "application/json" },
@@ -209,11 +214,7 @@ const Success = () => {
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
     script.async = true;
     document.body.appendChild(script);
-    return () => {
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
-      }
-    };
+    return () => document.body.removeChild(script);
   }, []);
 
   if (isVerifying) {
