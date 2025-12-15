@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import headerLogo from '../assets/headerlogo_1.png';
 import bgImage from '../assets/wintel-lottery-bg-3.png';
-import { Headset,Copyright,Clock } from 'lucide-react';
+import { Headset, Copyright, Clock } from 'lucide-react';
+
 // API Configuration
-
-
 const API_CONFIG = {
   baseUrl: import.meta.env.VITE_APP_API_BASE_URL,
   processPaymentEndpoint: import.meta.env.VITE_APP_PROCESS_PAYMENT,
@@ -28,52 +27,56 @@ const Success = () => {
     const fallback = searchParams.get("EPSTransactionId");
     return fallback?.trim() || "Not Provided";
   };
+
   const downloadPDFReceipt = async (dataOverride = null) => {
     const ticketData = dataOverride || verificationData;
-    if (!ticketData?.data?.tickets) return;
+    if (!ticketData?.data?.purchase_log) return;
   
     const { jsPDF } = window.jspdf;
+    const report = ticketData.data.purchase_log;
+    
+    const HEADER_HEIGHT = 75;
+    const TICKET_ROW_HEIGHT = 5;
+    const BOTTOM_MARGIN = 15;
+    
+    const tickets = report.ticket_numbers ? report.ticket_numbers.split(',').map(t => t.trim()) : [];
+    
+    let pageHeight = HEADER_HEIGHT + tickets.length * TICKET_ROW_HEIGHT + BOTTOM_MARGIN;
+    pageHeight = Math.max(pageHeight, 110);
+    
+    const pageWidth = 210;
+    
     const doc = new jsPDF({
       orientation: 'landscape',
       unit: 'mm',
-      format: [100, 210],
+      format: [pageHeight, pageWidth],
     });
   
-    const pageWidth = 210;
-    const pageHeight = 100;
-  
-    // Simple white background (no diagonal stripes)
+    // Background
     doc.setFillColor(255, 255, 255);
     doc.rect(0, 0, pageWidth, pageHeight, 'F');
-  
-    // Optional: Add a subtle border (remove if you want completely plain)
+    
+    // Border
     doc.setDrawColor(200, 200, 200);
     doc.setLineWidth(0.5);
     doc.rect(10, 10, pageWidth - 20, pageHeight - 20);
   
-    // ✅ Header Logo - LEFT ALIGNED
+    // Logo
     try {
-      const imgWidth = 35;
-      const imgHeight = 18;
-      doc.addImage(headerLogo, 'PNG', 15, 15, imgWidth, imgHeight);
-    } catch (err) {
-      console.warn("Header logo not loaded:", err);
-    }
+      doc.addImage(headerLogo, 'PNG', 15, 15, 35, 18);
+    } catch {}
   
-    // Header Text - LEFT ALIGNED next to logo
+    // Header text
     doc.setFontSize(11);
     doc.setFont(undefined, 'bold');
-    doc.setTextColor(128, 0, 128); // purple
+    doc.setTextColor(128, 0, 128);
     doc.text('Bangladesh Thalassaemia Samity (BTS)', 53, 22);
-  
-    doc.setFontSize(11);
-    doc.setFont(undefined, 'bold');
-    doc.setTextColor(2, 107, 57); // green
+    
+    doc.setTextColor(2, 107, 57);
     doc.text('Lottery 2025 (Govt. Approved)', 53, 28);
   
-    // Current Time Block
-    const now = new Date();
-    const formattedTime = now.toLocaleString('en-US', {
+    // Format date helper
+    const formatForPDF = (date) => date.toLocaleString('en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
@@ -81,71 +84,96 @@ const Success = () => {
       minute: '2-digit',
     });
   
+    const generatedTime = formatForPDF(new Date());
+    
+    let verifiedTime = 'N/A';
+    if (report.verification_time) {
+      const verifiedDate = new Date(report.verification_time.replace(' ', 'T'));
+      if (!isNaN(verifiedDate)) {
+        verifiedTime = formatForPDF(verifiedDate);
+      }
+    }
+  
+    // Timestamps
     doc.setFontSize(7);
     doc.setTextColor(100, 100, 100);
-    doc.setFont(undefined, 'normal');
-    doc.text(`Generated: ${formattedTime}`, 15, 38);
+    doc.text(`Generated at: ${generatedTime}`, 15, 38);
   
-    // Divider
-    doc.setDrawColor(200, 200, 200);
-    doc.setLineWidth(0.3);
-    doc.line(15, 41, pageWidth - 15, 41);
-  
-    // Merchant / EPS Data
-    const merchantId = searchParams.get('MerchantTransactionId') || 'N/A';
-  
+    // Payment Verified (above "Verified at")
     doc.setFontSize(8);
-    doc.setTextColor(60, 60, 60);
-    doc.setFont(undefined, 'normal');
-    doc.text('Merchant Transaction ID:', 15, 46);
     doc.setFont(undefined, 'bold');
-    doc.text(merchantId, 65, 46);
-  
-    doc.setFont(undefined, 'normal');
-    doc.text('EPS Transaction ID:', 15, 51);
-    doc.setFont(undefined, 'bold');
-    doc.text(extractEPSTransactionId(), 65, 51);
-  
-    // Payment Status
     doc.setTextColor(34, 139, 34);
-    doc.setFont(undefined, 'bold');
-    doc.text('Payment Verified', 15, 56);
+    doc.text('Payment Verified', pageWidth - 70, 33);
   
-    // Ticket Section Header
-    doc.setFontSize(9);
-    doc.setTextColor(0, 0, 0);
-    doc.setFont(undefined, 'bold');
-    doc.text('YOUR TICKET INFORMATION', 15, 62);
+    // Verified at timestamp
+    doc.setFontSize(7);
+    doc.setFont(undefined, 'normal');
+    doc.setTextColor(100, 100, 100);
+    doc.text(`Verified at: ${verifiedTime}`, pageWidth - 70, 38);
   
-    // Divider below header
+    // Separator line
     doc.setDrawColor(200, 200, 200);
-    doc.setLineWidth(0.3);
-    doc.line(15, 64, pageWidth - 15, 64);
+    doc.line(15, 47, pageWidth - 15, 47);
   
-    // Ticket List
-    let yPos = 69;
+    // LEFT SIDE - Customer Information
     doc.setFontSize(8);
     doc.setTextColor(0, 0, 0);
+    
+    doc.setFont(undefined, 'normal');
+    doc.text('Name:', 15, 52);
+    doc.setFont(undefined, 'bold');
+    doc.text(report.customer_name || 'N/A', 45, 52);
+    
+    doc.setFont(undefined, 'normal');
+    doc.text('Mobile:', 15, 57);
+    doc.setFont(undefined, 'bold');
+    doc.text(report.customer_mobile || 'N/A', 45, 57);
+    
+    doc.setFont(undefined, 'normal');
+    doc.text('District:', 15, 62);
+    doc.setFont(undefined, 'bold');
+    doc.text(report.customer_district || 'N/A', 45, 62);
   
-    ticketData.data.tickets.forEach((ticket, index) => {
-      if (yPos > pageHeight - 15) return;
-      
+    // RIGHT SIDE - Transaction IDs
+    const rightColX = pageWidth - 95;
+    
+    doc.setFont(undefined, 'normal');
+    doc.text('Merchant Transaction ID:', rightColX, 52);
+    doc.setFont(undefined, 'bold');
+    doc.text(report.merchant_transaction_id || 'N/A', rightColX + 50, 52);
+    
+    doc.setFont(undefined, 'normal');
+    doc.text('EPS Transaction ID:', rightColX, 57);
+    doc.setFont(undefined, 'bold');
+    doc.text(report.eps_transaction_id || 'N/A', rightColX + 50, 57);
+  
+    // Ticket section header
+    doc.setFontSize(9);
+    doc.setFont(undefined, 'bold');
+    doc.setTextColor(0, 0, 0);
+    doc.text('YOUR TICKET INFORMATION', 15, 70);
+    
+    doc.setDrawColor(200, 200, 200);
+    doc.line(15, 72, pageWidth - 15, 72);
+  
+    // Tickets list
+    let yPos = 77;
+    doc.setFontSize(8);
+    
+    tickets.forEach((ticket, index) => {
       doc.setFont(undefined, 'bold');
       doc.text(`Ticket ${index + 1}:`, 15, yPos);
+      
       doc.setFont(undefined, 'normal');
-      doc.text(ticket.ticket_no, 35, yPos);
-      doc.text(`Mobile: ${ticket.mobile || 'Not Provided'}`, 85, yPos);
-      yPos += 5;
+      doc.text(ticket, 35, yPos);
+      
+      yPos += TICKET_ROW_HEIGHT;
     });
-  
- 
-  
   
     // Save File
     doc.save('lottery-ticket-receipt.pdf');
-  };                    
-  
-  
+  };
+
   useEffect(() => {
     const verifyPayment = async () => {
       try {
@@ -193,7 +221,7 @@ const Success = () => {
   
         // Auto PDF download
         setTimeout(() => {
-          if (result?.data?.tickets) {
+          if (result?.data?.purchase_log) {
             downloadPDFReceipt(result);
           }
         }, 500);
@@ -206,7 +234,6 @@ const Success = () => {
   
     verifyPayment();
   }, [searchParams]);
-  
 
   // Load jsPDF library
   useEffect(() => {
@@ -281,7 +308,7 @@ const Success = () => {
       />
       <div className="relative z-10 min-h-screen flex items-center justify-center p-4 sm:p-6">
         <div className="w-full max-w-lg bg-white/95 rounded-2xl shadow-2xl p-6 sm:p-8">
-        <div className="text-center mb-4">
+          <div className="text-center mb-4">
             <img
               src={headerLogo}
               alt="Bangladesh Thalassaemia Samity & Hospital"
@@ -300,14 +327,8 @@ const Success = () => {
                           [@media(max-width:440px)]:text-sm
                           [@media(max-width:360px)]:text-xs
                           whitespace-nowrap">
-                     Lottery 2025 (Govt. Approved)
+              Lottery 2025 (Govt. Approved)
             </h1>
-            
-            {/* <p className="sm:text-sm text-gray-500
-                         [@media(max-width:440px)]:text-xs
-                         [@media(max-width:360px)]:text-[10px]">
-              Get your ticket now!
-            </p> */}
           </div>
 
           <div className="flex justify-center mb-6">
@@ -324,34 +345,30 @@ const Success = () => {
               Your lottery ticket purchase is confirmed.
             </p>
             <p className="text-gray-600 mt-2 text-sm">
-            You will get your ticket numbers via SMS.
+              You will get your ticket numbers via SMS.
             </p>
-            
           </div>
 
           <div className="bg-gray-50 rounded-lg p-4 mb-6 space-y-2">
             <h3 className="font-semibold text-gray-800 text-center mb-2">Transaction Details</h3>
             <p className="text-sm">
-              <strong>Merchant Txn ID:</strong> {searchParams.get('MerchantTransactionId')}
+              <strong>Merchant Txn ID:</strong> {verificationData?.data?.purchase_log?.merchant_transaction_id || searchParams.get('MerchantTransactionId')}
             </p>
-            {/* <p className="text-sm">
-              <strong>EPS Txn ID:</strong> {extractEPSTransactionId()}
-            </p> */}
             <p className="text-sm text-green-600">
               ✓ Payment Verified Successfully
             </p>
           </div>
 
-          {verificationData?.data?.tickets && (
+          {verificationData?.data?.purchase_log && (
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
               <h3 className="font-semibold text-blue-800 mb-3 text-center">
                 Your Ticket Information
               </h3>
-              {verificationData.data.tickets.map((ticket, index) => (
+              {verificationData.data.purchase_log.ticket_numbers.split(',').map((ticketNo, index) => (
                 <div key={index} className="bg-white p-3 rounded-lg mb-2 shadow-sm">
-                  <p className="text-sm font-semibold">Ticket No: {ticket.ticket_no}</p>
+                  <p className="text-sm font-semibold">Ticket No: {ticketNo.trim()}</p>
                   <p className="text-xs text-gray-500">
-                    Mobile: {ticket.mobile || "Not Provided"}
+                    Mobile: {verificationData.data.purchase_log.customer_mobile || "Not Provided"}
                   </p>
                 </div>
               ))}
@@ -373,8 +390,8 @@ const Success = () => {
               📄 Download PDF Receipt
             </button>
           </div>
-          <div className=" mt-3 flex items-end gap-1 justify-end text-center leading-none">
 
+          <div className="mt-3 flex items-end gap-1 justify-end text-center leading-none">
             <Headset className="w-3.5 h-3.5 text-blue-600" />
             <span className="text-[11px] font-medium text-gray-800">
               Support :
@@ -386,12 +403,13 @@ const Success = () => {
               09606549134
             </a>
           </div>
-          <div className="mt-0 flex items-center justify-end gap-1 " style={{marginBottom:'-5px'}}>
+
+          <div className="mt-0 flex items-center justify-end gap-1" style={{marginBottom:'-5px'}}>
             <Clock className="w-2.5 h-2.5 text-blue-600" />
-                <span className="text-[9px] font-small text-gray-800">
-                  Sunday to Thursday (10 AM to 6 PM) 
-                </span>
-              </div>
+            <span className="text-[9px] font-small text-gray-800">
+              Sunday to Thursday (10 AM to 6 PM) 
+            </span>
+          </div>
 
           {/* Copyright */}
           <div className="mt-3 w-full bg-[#edf4ff] py-2 text-center rounded-lg text-sm text-gray-700">
@@ -406,7 +424,6 @@ const Success = () => {
               Wintel Limited.
             </a>
           </div>
-
         </div>
       </div>
     </div>
