@@ -5,7 +5,7 @@ import bgImage from '../assets/wintel-lottery-bg-3.png';
 import payImage from '../assets/pay.png';
 import nagadPayImage from '../assets/nagad-pay.png';
 // import termimage from '../assets/terms.jpg';
-import { Copyright, Headset, FileText, X,Clock } from 'lucide-react';
+import { Copyright, Headset, FileText, X,Clock,Mail } from 'lucide-react';
 
 // API Configuration
 const API_CONFIG = {
@@ -590,6 +590,13 @@ const Home = () => {
             <Clock className="w-2.5 h-2.5 text-blue-600" />
                 <span className="text-[9px] font-small text-gray-800">
                   Sunday to Thursday (10 AM to 6 PM) 
+                </span>
+              </div>
+
+                 <div className="mt-0 flex items-center justify-end gap-1 " style={{marginBottom:'-5px'}}>
+            <Mail className="w-2.5 h-2.5 text-blue-600" />
+                <span className="text-[9px] font-small text-gray-800">
+                 support@wintelbd.com
                 </span>
               </div>
             {/* Submit Button */}
