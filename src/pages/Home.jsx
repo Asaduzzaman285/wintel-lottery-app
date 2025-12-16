@@ -3,8 +3,9 @@ import Select from 'react-select';
 import headerLogo from '../assets/headerlogo_1.png';
 import bgImage from '../assets/wintel-lottery-bg-3.png';
 import payImage from '../assets/pay.png';
+import nagadPayImage from '../assets/nagad-pay.png';
 // import termimage from '../assets/terms.jpg';
-import { Copyright, Headset, FileText, X,Clock } from 'lucide-react';
+import { Copyright, Headset, FileText, X,Clock,Mail } from 'lucide-react';
 
 const API_CONFIG = {
   baseUrl: import.meta.env.VITE_APP_API_BASE_URL,
@@ -96,6 +97,12 @@ const Home = () => {
   const [debugMode, setDebugMode] = useState(false);
   const [debugInfo, setDebugInfo] = useState(null);
   const [showTermsModal, setShowTermsModal] = useState(false);
+
+  // Check if merchant token is for NAGAD
+  const isNagadPayment = API_CONFIG.merchantToken === 'a2fb89070bc29c0988dafa03f971af20176e1293a50d5';
+  const paymentMethodName = isNagadPayment ? 'NAGAD' : 'EPS';
+
+  const paymentMethodImage = isNagadPayment ? nagadPayImage : payImage;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -255,7 +262,6 @@ const Home = () => {
       minHeight: '42px'
     })
   };
-
   const TermsModal = () => {
     if (!showTermsModal) return null;
   
@@ -286,7 +292,7 @@ const Home = () => {
     <div className="bg-blue-50 border-l-3 border-blue-600 p-2 rounded">
       <p className="text-[11px] leading-snug">
         <span className="font-bold text-blue-700">১.</span>
-        অনুমোদিত ব্যাংক, প্রতিষ্ঠান ও এই পোর্টাল ব্যতীত অন্য কোনো মাধ্যম হতে টিকেট ক্রয় করলে ঐ টিকেটের জন্য বাংলাদেশ থ্যালাসামিয়া সমিতি ও সংশ্লিষ্ট কর্তৃপক্ষ দায়ী থাকবে না।
+        অনুমোদিত ব্যাংক, প্রতিষ্ঠান ও এই পোর্টাল ব্যতীত অন্য কোনো মাধ্যম হতে টিকেট ক্রয় করলে সে টিকেটের জন্য বাংলাদেশ থ্যালাসামিয়া সমিতি ও সংশ্লিষ্ট কর্তৃপক্ষ দায়ী থাকবে না।
       </p>
     </div>
 
@@ -310,7 +316,7 @@ const Home = () => {
     <div className="bg-yellow-50 border-l-3 border-yellow-600 p-2 rounded">
       <p className="text-[11px] leading-snug">
         <span className="font-bold text-yellow-700">৪.</span>
-        লটারীর ড্র এর নির্ধারিত তারিখ <strong>২৩ জানুয়ারী ২০২৬</strong>; বিজয়ীদের তালিকা সংবাদপত্রের মাধ্যমে প্রকাশ করা হবে। সেই সাথে বর্তমান ওয়েবসাইটেও (bdlotteryticket.com) বিজয়ীদের তালিকা প্রকাশ হবে।
+        লটারীর ড্র এর নির্ধারিত তারিখ <strong>২৯ জানুয়ারী ২০২৬</strong>; বিজয়ীদের তালিকা সংবাদপত্রের মাধ্যমে প্রকাশ করা হবে। সেই সাথে বর্তমান ওয়েবসাইটেও (bdlotteryticket.com) বিজয়ীদের তালিকা প্রকাশ হবে।
       </p>
     </div>
 
@@ -318,7 +324,7 @@ const Home = () => {
     <div className="bg-red-50 border-l-3 border-red-600 p-2 rounded">
       <p className="text-[11px] leading-snug">
         <span className="font-bold text-red-700">৫.</span>
-        ফলাফল প্রকাশের ৩০ দিনের মধ্যে বিজয়ীদের পুরষ্কারের জন্য নাম ঠিকানা, সত্যায়িত ছবি ও টিকেট প্রাপ্তির এসএমএস সহ লিখিত দাবী কর্তৃপক্ষের নিকট দাখিল করতে হবে। অনলাইন টিকেটের ক্ষেত্রে টিকেটহোল্ডারকে হেল্পলাইনে (09606541934) অথবা support@wintelbd.com এ যোগাযোগ করার জন্য অনুরোধ জানানো হচ্ছে।
+        ফলাফল প্রকাশের ৩০ দিনের মধ্যে বিজয়ীদের পুরষ্কারের জন্য নাম ঠিকানা, সত্যায়িত ছবি ও টিকেট প্রাপ্তির এসএমএস সহ লিখিত দাবী কর্তৃপক্ষের নিকট দাখিল করতে হবে। অনলাইন টিকেটের ক্ষেত্রে টিকেটহোল্ডারকে হেল্পলাইনে (09606541934) অথবা support@wintelbd.com এ যোগাযোগ করার জন্য অনুরোধ জানানো হচ্ছে।
       </p>
     </div>
 
@@ -511,7 +517,7 @@ const Home = () => {
 <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg p-3 border-2 border-amber-200">
   <div className="text-center mb-2">
     <h3 className="text-sm font-bold text-gray-800">পুরস্কারের তালিকা</h3>
-    {/* <p className="text-xs text-gray-600">ড্র: ২৩ জানুয়ারি ২০২৬ ইং</p> */}
+    {/* <p className="text-xs text-gray-600">ড্র: ২৯ জানুয়ারি ২০২৬ ইং</p> */}
   </div>
 
   <div className="grid grid-cols-2 gap-1.5 text-xs">
@@ -586,10 +592,17 @@ const Home = () => {
                   Sunday to Thursday (10 AM to 6 PM) 
                 </span>
               </div>
+
+                 <div className="mt-0 flex items-center justify-end gap-1 " style={{marginBottom:'-5px'}}>
+            <Mail className="w-2.5 h-2.5 text-blue-600" />
+                <span className="text-[9px] font-small text-gray-800">
+                 support@wintelbd.com
+                </span>
+              </div>
             {/* Submit Button */}
             <button
               onClick={handlePayNow}
-              disabled={isLoading}
+              disabled={isLoading || isNagadPayment}
               className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-3 rounded-lg hover:from-blue-700 hover:to-cyan-600 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
             >
               {isLoading ? (
@@ -600,11 +613,12 @@ const Home = () => {
                   </svg>
                   Processing Payment...
                 </>
+              ) : isNagadPayment ? (
+                <>Coming Soon</>
               ) : (
                 <>Pay Now (৳)</>
               )}
             </button>
-
             {/* Debug Toggle */}
             {/* <button
               onClick={() => setDebugMode(!debugMode)}
@@ -643,13 +657,13 @@ const Home = () => {
                 <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                <span className="text-xs font-semibold text-gray-700">Secure Payment via EPS</span>
+                <span className="text-xs font-semibold text-gray-700">Secure Payment via {paymentMethodName}</span>
               </div>
               <div className="flex items-center justify-center">
                 <img 
-                  src={payImage} 
+                  src={paymentMethodImage} 
                   alt="Payment Methods" 
-                  className="h-100 w-100 object-contain"
+                  className={isNagadPayment ? "w-[30%] h-auto object-contain" : "h-100 w-100 object-contain"}
                 />
               </div>
             </div>

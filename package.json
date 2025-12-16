@@ -10,11 +10,14 @@
     "preview": "vite preview",
     "dev:main": "env-cmd -f .env.main vite",
     "build:main": "env-cmd -f .env.main vite build",
-
-    "dev:axentec": "env-cmd -f .env.axentec vite --host 0.0.0.0 --port 3000",
-    "build:axentec": "env-cmd -f .env.axentec vite build",
+    "dev:demo": "env-cmd -f .env.demo vite",
+    "build:demo": "env-cmd -f .env.demo vite build",
+    "dev:axentech": "env-cmd -f .env.axentec vite --host 0.0.0.0 --port 3000",
+    "build:axentech": "env-cmd -f .env.axentec vite build",
     "dev:prod": "env-cmd -f .env.prod vite --host 0.0.0.0 --port 3000",
     "build:prod": "env-cmd -f .env.prod vite build",
+    "dev:nagad": "env-cmd -f .env.nagad vite --host 0.0.0.0 --port 3000",
+    "build:nagad": "env-cmd -f .env.nagad vite build",
     "dev:rockstreamer": "env-cmd -f .env.rockstreamer vite --host 0.0.0.0 --port 3000",
     "build:rockstreamer": "env-cmd -f .env.rockstreamer vite build"
   },
