@@ -525,7 +525,7 @@ const Home = () => {
       <span className="font-semibold text-amber-700">১ম পুরস্কার:</span> (১টি) ফ্ল্যাট/নগদ ৩০ লক্ষ টাকা
     </div>
     <div className="bg-white/80 rounded p-1.5">
-      <span className="font-semibold text-amber-700">২য় পুরস্কার:</span> (১টি) গাড়ি/৮ লক্ষ টাকা
+      <span className="font-semibold text-amber-700">২য় পুরস্কার:</span> (১টি) গাড়ি/৭ লক্ষ টাকা
     </div>
     <div className="bg-white/80 rounded p-1.5">
       <span className="font-semibold text-amber-700">৩য় পুরস্কার:</span> (১টি) মোটরসাইকেল/১ লক্ষ ৫০ হাজার টাকা
@@ -553,7 +553,7 @@ const Home = () => {
       সর্বমোট ৫০ লক্ষ টাকার ৯৩৫ টি পুরষ্কার
     </p>
     <p className="text-xs text-white font-bold bg-red-600 inline-block px-3 py-1 rounded">
-      ড্র: ২৯ জানুয়ারি ২০২৬ ইং
+      ড্র: ২৩ জানুয়ারি ২০২৬ ইং
     </p>
   </div>
 </div>
