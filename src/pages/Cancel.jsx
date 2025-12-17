@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import headerLogo from '../assets/headerlogo_1.png';
 import bgImage from '../assets/wintel-lottery-bg-3.png';
-import { Clock, Headset, Copyright } from 'lucide-react';
+import { Clock, Headset, Copyright,Mail } from 'lucide-react';
 
 // SAME API CONFIG AS SUCCESS PAGE
 const API_CONFIG = {
@@ -211,6 +211,12 @@ const Cancel = () => {
               <Clock className="w-2.5 h-2.5 text-blue-600" />
               <span className="text-[9px] text-gray-800">Sunday to Thursday (10 AM to 6 PM)</span>
             </div>
+            <div className="mt-0 flex items-center justify-end gap-1 " style={{marginBottom:'-5px'}}>
+            <Mail className="w-2.5 h-2.5 text-blue-600" />
+                <span className="text-[9px] font-small text-gray-800">
+                 support@wintelbd.com
+                </span>
+              </div>
           </div>
 
           {/* Footer */}
