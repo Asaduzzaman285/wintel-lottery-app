@@ -316,7 +316,7 @@ const Home = () => {
     <div className="bg-yellow-50 border-l-3 border-yellow-600 p-2 rounded">
       <p className="text-[11px] leading-snug">
         <span className="font-bold text-yellow-700">৪.</span>
-        লটারীর ড্র এর নির্ধারিত তারিখ <strong>২৯ জানুয়ারী ২০২৬</strong>; বিজয়ীদের তালিকা সংবাদপত্রের মাধ্যমে প্রকাশ করা হবে। সেই সাথে বর্তমান ওয়েবসাইটেও (bdlotteryticket.com) বিজয়ীদের তালিকা প্রকাশ হবে।
+        লটারীর ড্র এর নির্ধারিত তারিখ <strong>২৩ জানুয়ারী ২০২৬</strong>; বিজয়ীদের তালিকা সংবাদপত্রের মাধ্যমে প্রকাশ করা হবে। সেই সাথে বর্তমান ওয়েবসাইটেও (bdlotteryticket.com) বিজয়ীদের তালিকা প্রকাশ হবে।
       </p>
     </div>
 
