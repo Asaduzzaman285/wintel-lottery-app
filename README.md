@@ -6,7 +6,7 @@ npm run dev:build
 
 axentec: 
 npm run dev:axentec
-npm run build:axentech
+npm run build:axentec
 
 
 production :

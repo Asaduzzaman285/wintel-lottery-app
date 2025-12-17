@@ -13,8 +13,8 @@
 
     "dev:demo": "env-cmd -f .env.demo vite",
     "build:demo": "env-cmd -f .env.demo vite build",
-    "dev:axentech": "env-cmd -f .env.axentech vite --host 0.0.0.0 --port 3000",
-    "build:axentech": "env-cmd -f .env.axentech vite build",
+    "dev:axentech": "env-cmd -f .env.axentec vite --host 0.0.0.0 --port 3000",
+    "build:axentech": "env-cmd -f .env.axentec vite build",
       "dev:prod": "env-cmd -f .env.prod vite --host 0.0.0.0 --port 3000",
     "build:prod": "env-cmd -f .env.prod vite build",
 

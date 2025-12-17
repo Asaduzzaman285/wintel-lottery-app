@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import headerLogo from '../assets/headerlogo_1.png';
 import bgImage from '../assets/wintel-lottery-bg-3.png';
-import { Headset, Copyright, Clock } from 'lucide-react';
+import { Headset, Copyright, Clock,Mail } from 'lucide-react';
 
 // API Configuration
 const API_CONFIG = {
@@ -12,6 +12,7 @@ const API_CONFIG = {
   token: import.meta.env.VITE_APP_TOKEN,
   merchantToken: import.meta.env.VITE_APP_MERCHANT_TOKEN
 };
+
 
 const Success = () => {
   const navigate = useNavigate();
@@ -410,6 +411,12 @@ const Success = () => {
               Sunday to Thursday (10 AM to 6 PM) 
             </span>
           </div>
+          <div className="mt-0 flex items-center justify-end gap-1 " style={{marginBottom:'-5px'}}>
+            <Mail className="w-2.5 h-2.5 text-blue-600" />
+                <span className="text-[9px] font-small text-gray-800">
+                 support@wintelbd.com
+                </span>
+              </div>
 
           {/* Copyright */}
           <div className="mt-3 w-full bg-[#edf4ff] py-2 text-center rounded-lg text-sm text-gray-700">
