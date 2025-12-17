@@ -7,7 +7,6 @@ import nagadPayImage from '../assets/nagad-pay.png';
 // import termimage from '../assets/terms.jpg';
 import { Copyright, Headset, FileText, X,Clock,Mail } from 'lucide-react';
 
-// API Configuration
 const API_CONFIG = {
   baseUrl: import.meta.env.VITE_APP_API_BASE_URL,
   processPaymentEndpoint: import.meta.env.VITE_APP_PROCESS_PAYMENT,
@@ -15,6 +14,7 @@ const API_CONFIG = {
   token: import.meta.env.VITE_APP_TOKEN,
   merchantToken: import.meta.env.VITE_APP_MERCHANT_TOKEN
 };
+
 
 // Bangladesh Districts Data
 const districts = [
