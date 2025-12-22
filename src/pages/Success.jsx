@@ -30,7 +30,11 @@ const Success = () => {
 
   const downloadPDFReceipt = async (dataOverride = null) => {
     const ticketData = dataOverride || verificationData;
-    if (!ticketData?.data?.purchase_log) return;
+    console.log('Download attempt - ticketData:', ticketData);
+    if (!ticketData?.data?.purchase_log) {
+      console.warn('No purchase_log found in ticketData');
+      return;
+    }
   
     const { jsPDF } = window.jspdf;
     const report = ticketData.data.purchase_log;
@@ -384,7 +388,7 @@ const Success = () => {
             </button>
 
             <button
-              onClick={downloadPDFReceipt}
+              onClick={() => downloadPDFReceipt()}
               className="flex-1 bg-white border-2 border-orange-500 text-orange-600 py-3 rounded-lg font-semibold hover:bg-orange-50"
             >
               📄 Download PDF Receipt
