@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Success from "./pages/Success";
 import Fail from "./pages/Fail";
 import Cancel from "./pages/Cancel";
+import Callback from "./pages/Callback";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <Route path="/success" element={<Success />} />
         <Route path="/fail" element={<Fail />} />
         <Route path="/cancel" element={<Cancel />} />
+        <Route path="/callback" element={<Callback />} />
       </Routes>
     </Router>
   );

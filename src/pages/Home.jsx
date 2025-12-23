@@ -158,7 +158,7 @@ const Home = () => {
       const totalPrice = formData.quantity * 20;
 
       const paymentData = {
-        token: API_CONFIG.token,
+        // token: API_CONFIG.token,
         merchant_token: API_CONFIG.merchantToken,
         mobile: formData.mobileNo,
         name: formData.name,
@@ -167,7 +167,8 @@ const Home = () => {
         total_price: totalPrice.toString(),
         successUrl: `${window.location.origin}/success`,
         failUrl: `${window.location.origin}/fail`,
-        cancelUrl: `${window.location.origin}/cancel`
+        cancelUrl: `${window.location.origin}/cancel`,
+        callbackUrl: `${window.location.origin}/callback`
       };
 
       // console.log('📦 Payment Data:', paymentData);
